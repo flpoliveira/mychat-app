@@ -61,8 +61,13 @@ export const saveSession = async (session) => {
 export const findMessagesForUser = async (userID) => {
   await db.read();
   return db.data.messages.filter(
-    (message) => message.from === userID && message.to === userID
+    (message) => message.from === userID || message.to === userID
   );
+};
+
+export const findMessage = async (id) => {
+  await db.read();
+  return db.data.messages.find((message) => message.id === id);
 };
 
 export const findAllSessions = async () => {
@@ -72,6 +77,20 @@ export const findAllSessions = async () => {
 
 export const saveMessage = async (message) => {
   await db.read();
-  db.data.messages.push(message);
+
+  if (!message.from || !message.to || !message.content) {
+    throw new Error("from, to, and text are required");
+  }
+
+  if (db.data.messages.find((m) => m.id === message.id)) {
+    db.data.messages = db.data.messages.map((m) => {
+      if (m.id === message.id) {
+        m = message;
+      }
+      return m;
+    });
+  } else {
+    db.data.messages.push(message);
+  }
   await db.write();
 };

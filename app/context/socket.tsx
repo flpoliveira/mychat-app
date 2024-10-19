@@ -16,14 +16,34 @@ type SessionType = {
   userID: string;
 };
 
+type UserMessageType = {
+  id?: string;
+  timestamp: string;
+  content: string;
+  from: string;
+  to: string;
+  liked?: boolean;
+};
+
+type UserType = {
+  userID: string;
+  username: string;
+  connected: boolean;
+  last_connected?: string;
+  img_url?: string;
+  messages?: Array<UserMessageType>;
+};
+
 const SocketContext = createContext<{
   socket: MutableRefObject<Socket | null>;
   session: SessionType | null;
   handleChangeSession: (value: SessionType) => void;
   connect: (username: string, userID?: string) => void;
+  users: Array<UserType>;
+  updateMessage: (message: Partial<UserMessageType>) => void;
 } | null>(null);
 
-const socketEndpoint = "http://localhost:3000";
+const socketEndpoint = "http://192.168.0.4:3000";
 
 const storeSession = async (value: SessionType) => {
   try {
@@ -56,6 +76,45 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [connection, setConnection] = useState(false);
 
   const [session, setSession] = useState<SessionType | null>(null);
+  const [users, setUsers] = useState<Array<UserType>>([]);
+
+  const addMessage = useCallback((message: UserMessageType) => {
+    console.log("Addin new message: ", message);
+    setUsers((prev) => {
+      const newUsers = prev.map((user) => {
+        if (user.userID === message.from || user.userID === message.to) {
+          console.log("Im here!");
+          return {
+            ...user,
+            hasNewMessage: true,
+            messages: [...(user.messages || []), message],
+          };
+        }
+        return user;
+      });
+      return newUsers;
+    });
+  }, []);
+
+  const updateMessage = useCallback((message: Partial<UserMessageType>) => {
+    setUsers((prev) => {
+      const newUsers = prev.map((user) => {
+        if (user.userID === message.from || user.userID === message.to) {
+          return {
+            ...user,
+            messages: user.messages?.map((msg) => {
+              if (msg.id === message.id) {
+                return { ...msg, ...message };
+              }
+              return msg;
+            }),
+          };
+        }
+        return user;
+      });
+      return newUsers;
+    });
+  }, []);
 
   useEffect(() => {
     getSession().then((value) => {
@@ -92,13 +151,27 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       }
     });
 
+    socket.on("users", (users) => {
+      setUsers(users);
+    });
+
+    socket.on("private message", (message: UserMessageType) => {
+      console.log("Received message", message);
+      addMessage(message);
+    });
+
+    socket.on("like message", (message: UserMessageType) => {
+      console.log("Received like message", message);
+      updateMessage(message);
+    });
+
     socketRef.current = socket;
 
     return () => {
       socket?.disconnect();
       socket?.removeAllListeners();
     };
-  }, [handleChangeSession]);
+  }, [handleChangeSession, addMessage, updateMessage]);
 
   const connect = useCallback((username: string, userID?: string) => {
     if (socketRef.current && username) {
@@ -109,6 +182,9 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     }
   }, []);
 
+  /**
+   * Handle connection stored session
+   */
   useEffect(() => {
     if (!connection && !!session && session.username && session.userID) {
       connect(session.username, session.userID);
@@ -117,7 +193,14 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
 
   return (
     <SocketContext.Provider
-      value={{ socket: socketRef, session, handleChangeSession, connect }}
+      value={{
+        socket: socketRef,
+        session,
+        handleChangeSession,
+        connect,
+        users,
+        updateMessage,
+      }}
     >
       {children}
     </SocketContext.Provider>
@@ -132,4 +215,10 @@ const useSocket = () => {
   return context;
 };
 
-export { SocketContext, SocketProvider, useSocket, clearStorage };
+export {
+  SocketContext,
+  SocketProvider,
+  useSocket,
+  clearStorage,
+  UserMessageType,
+};

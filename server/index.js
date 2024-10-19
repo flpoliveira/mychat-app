@@ -1,6 +1,7 @@
 import {
   findSession,
   saveSession,
+  findMessage,
   findMessagesForUser,
   findAllSessions,
   saveMessage,
@@ -91,13 +92,29 @@ io.on("connection", async (socket) => {
 
   // forward the private message to the right recipient (and to other tabs of the sender)
   socket.on("private message", ({ content, to }) => {
+    console.log("private message", { content, from: socket.userID, to });
     const message = {
+      id: randomId(),
+      timestamp: new Date().toISOString(),
       content,
       from: socket.userID,
+      liked: false,
       to,
     };
     socket.to(to).to(socket.userID).emit("private message", message);
+    // send also for the receiver update the id
+    socket.emit("private message", message);
     saveMessage(message);
+  });
+
+  socket.on("like message", async ({ id }) => {
+    console.log("like message", { id, from: socket.userID });
+    const message = await findMessage(id);
+    if (message.to === socket.userID) {
+      message.liked = !message.liked;
+      socket.to(message.from).emit("like message", message);
+      saveMessage(message);
+    }
   });
 
   // notify users upon disconnection

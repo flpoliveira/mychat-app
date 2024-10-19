@@ -1,7 +1,7 @@
 import { useSocket } from "@/context/socket";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TextInput, TouchableOpacity } from "react-native";
 
 function ChatConnect() {

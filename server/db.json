@@ -4,8 +4,31 @@
       "userID": "4611eb3e-316d-434c-89a8-c6a769e19d12",
       "username": "Flpoliveira",
       "connected": true,
-      "last_connected": "2024-10-19T19:09:07.507Z"
+      "last_connected": "2024-10-19T21:58:27.518Z"
+    },
+    {
+      "userID": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
+      "username": "Joao",
+      "connected": true,
+      "last_connected": "2024-10-19T21:58:27.845Z"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": "7df7b558-aabc-466d-a79e-bea29157020c",
+      "timestamp": "2024-10-19T21:58:22.324Z",
+      "content": "Test",
+      "from": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
+      "liked": false,
+      "to": "4611eb3e-316d-434c-89a8-c6a769e19d12"
+    },
+    {
+      "id": "816ef2af-546e-4669-b459-9aa8e7928db0",
+      "timestamp": "2024-10-19T21:58:36.472Z",
+      "content": "Hahahaha",
+      "from": "4611eb3e-316d-434c-89a8-c6a769e19d12",
+      "liked": true,
+      "to": "ea0ca6ec-6328-4715-af14-4d628d1031b4"
+    }
+  ]
 }
