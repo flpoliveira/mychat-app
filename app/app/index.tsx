@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, TouchableOpacity } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -6,9 +6,13 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { clearStorage, useSocket } from "@/context/socket";
+import { ChatConnect } from "@/components/ChatConnect";
 
 export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, "background");
+
+  const { session } = useSocket();
 
   return (
     <SafeAreaView
@@ -17,9 +21,13 @@ export default function HomeScreen() {
         flex: 1,
       }}
     >
-      <ThemedView>
-        <ThemedText>heegege</ThemedText>
-      </ThemedView>
+      {!!session ? (
+        <TouchableOpacity onPress={() => clearStorage()}>
+          <ThemedText>Disconnect</ThemedText>
+        </TouchableOpacity>
+      ) : (
+        <ChatConnect />
+      )}
     </SafeAreaView>
   );
 }

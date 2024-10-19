@@ -1,7 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
+  MutableRefObject,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -10,22 +12,22 @@ import {
 import { io, Socket } from "socket.io-client";
 
 type SessionType = {
-  sessionID: string;
   username: string;
   userID: string;
 };
 
 const SocketContext = createContext<{
-  socket: Socket | null;
+  socket: MutableRefObject<Socket | null>;
   session: SessionType | null;
   handleChangeSession: (value: SessionType) => void;
+  connect: (username: string, userID?: string) => void;
 } | null>(null);
 
 const socketEndpoint = "http://localhost:3000";
 
 const storeSession = async (value: SessionType) => {
   try {
-    await AsyncStorage.setItem("my-key", JSON.stringify(value));
+    await AsyncStorage.setItem("session", JSON.stringify(value));
   } catch (e) {
     // saving error
   }
@@ -33,10 +35,18 @@ const storeSession = async (value: SessionType) => {
 
 const getSession = async () => {
   try {
-    const value = await AsyncStorage.getItem("my-key");
+    const value = await AsyncStorage.getItem("session");
     if (value !== null) {
       return JSON.parse(value);
     }
+  } catch (e) {
+    // error reading value
+  }
+};
+
+const clearStorage = async () => {
+  try {
+    await AsyncStorage.removeItem("session");
   } catch (e) {
     // error reading value
   }
@@ -56,33 +66,70 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   }, []);
 
   const handleChangeSession = useCallback(async (value: SessionType) => {
+    console.log("Setting session", value);
     setSession(value);
     await storeSession(value);
   }, []);
 
-  const socket = useRef<Socket | null>(null);
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.current = io(socketEndpoint, {
+    const socket = io(socketEndpoint, {
       transports: ["websocket"],
+      autoConnect: false,
     });
 
-    socket.current.io.on("open", () => setConnection(true));
-    socket.current.io.on("close", () => setConnection(false));
+    socket.onAny((event, ...args) => {
+      console.log("On Any");
+      console.log(event, args);
+    });
+
+    socket.on("session", ({ userID, username }) => {
+      console.log("Received session", { userID, username });
+      if (userID && username) {
+        socket.auth = { userID, username };
+        handleChangeSession({ userID, username });
+      }
+    });
+
+    socketRef.current = socket;
 
     return () => {
-      socket.current?.disconnect();
-      socket.current?.removeAllListeners();
+      socket?.disconnect();
+      socket?.removeAllListeners();
     };
+  }, [handleChangeSession]);
+
+  const connect = useCallback((username: string, userID?: string) => {
+    if (socketRef.current && username) {
+      socketRef.current.auth = { username, userID };
+      socketRef.current.connect();
+    } else {
+      console.log("Socket not available");
+    }
   }, []);
+
+  useEffect(() => {
+    if (!connection && !!session && session.username && session.userID) {
+      connect(session.username, session.userID);
+    }
+  }, [connection, connect, session]);
 
   return (
     <SocketContext.Provider
-      value={{ socket: socket.current, session, handleChangeSession }}
+      value={{ socket: socketRef, session, handleChangeSession, connect }}
     >
       {children}
     </SocketContext.Provider>
   );
 };
 
-export { SocketContext, SocketProvider };
+const useSocket = () => {
+  const context = useContext(SocketContext);
+  if (!context) {
+    throw new Error("useSocket must be used within a SocketProvider");
+  }
+  return context;
+};
+
+export { SocketContext, SocketProvider, useSocket, clearStorage };

@@ -33,18 +33,23 @@ export const getAllMessages = async (from, to) => {
   );
 };
 
-export const findSession = async (sessionID) => {
+export const findSession = async (userID) => {
   await db.read();
-  return db.data.sessions.find((session) => session.sessionID === sessionID);
+  return db.data.sessions.find((session) => session.userID === userID);
 };
 
 export const saveSession = async (session) => {
+  if (!session.userID) {
+    throw new Error("userID is required");
+  }
+
   await db.read();
-  if (!db.data.sessions.find((s) => s.sessionID === session.sessionID)) {
+
+  if (!db.data.sessions.find((s) => s.userID === session.userID)) {
     db.data.sessions.push(session);
   } else {
     db.data.sessions = db.data.sessions.map((s) => {
-      if (s.sessionID === session.sessionID) {
+      if (s.userID === session.userID) {
         s = session;
       }
       return s;
@@ -56,7 +61,7 @@ export const saveSession = async (session) => {
 export const findMessagesForUser = async (userID) => {
   await db.read();
   return db.data.messages.filter(
-    (message) => message.from === userID || message.to === userID
+    (message) => message.from === userID && message.to === userID
   );
 };
 

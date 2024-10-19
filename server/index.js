@@ -18,12 +18,11 @@ const io = new Server(httpServer, {
 
 const randomId = () => uuidv4();
 
-io.use((socket, next) => {
-  const sessionID = socket.handshake.auth.sessionID;
-  if (sessionID) {
-    const session = findSession(sessionID);
+io.use(async (socket, next) => {
+  const userID = socket.handshake.auth.userID;
+  if (userID) {
+    const session = await findSession(userID);
     if (session) {
-      socket.sessionID = sessionID;
       socket.userID = session.userID;
       socket.username = session.username;
       return next();
@@ -33,24 +32,28 @@ io.use((socket, next) => {
   if (!username) {
     return next(new Error("invalid username"));
   }
-  socket.sessionID = randomId();
   socket.userID = randomId();
   socket.username = username;
   next();
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
+  if (!socket.userID) {
+    return;
+  }
   // persist session
-  saveSession("sessions", {
-    sessionID: socket.sessionID,
+  saveSession({
     userID: socket.userID,
     username: socket.username,
+    connected: true,
+    last_connected: new Date().toISOString(),
   });
 
+  console.log("user connected", socket.userID, socket.username);
   // emit session details
   socket.emit("session", {
-    sessionID: socket.sessionID,
     userID: socket.userID,
+    username: socket.username,
   });
 
   // join the "userID" room
@@ -59,7 +62,7 @@ io.on("connection", (socket) => {
   // fetch existing users
   const users = [];
   const messagesPerUser = new Map();
-  findMessagesForUser(socket.userID).forEach((message) => {
+  (await findMessagesForUser(socket.userID)).forEach((message) => {
     const { from, to } = message;
     const otherUser = socket.userID === from ? to : from;
     if (messagesPerUser.has(otherUser)) {
@@ -68,7 +71,7 @@ io.on("connection", (socket) => {
       messagesPerUser.set(otherUser, [message]);
     }
   });
-  findAllSessions().forEach((session) => {
+  (await findAllSessions()).forEach((session) => {
     users.push({
       userID: session.userID,
       username: session.username,
@@ -104,8 +107,9 @@ io.on("connection", (socket) => {
     if (isDisconnected) {
       // notify other users
       socket.broadcast.emit("user disconnected", socket.userID);
+      console.log("user disconnected", socket.userID);
       // update the connection status of the session
-      saveSession(socket.sessionID, {
+      saveSession({
         userID: socket.userID,
         username: socket.username,
         connected: false,
