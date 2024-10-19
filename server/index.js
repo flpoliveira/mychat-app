@@ -4,9 +4,13 @@ import {
   findMessagesForUser,
   findAllSessions,
   saveMessage,
-} from "./db";
-const httpServer = require("http").createServer();
-const io = require("socket.io")(httpServer, {
+} from "./db.js";
+import { v4 as uuidv4 } from "uuid";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:8080",
   },

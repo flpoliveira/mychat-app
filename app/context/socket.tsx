@@ -9,15 +9,21 @@ import {
 } from "react";
 import { io, Socket } from "socket.io-client";
 
+type SessionType = {
+  sessionID: string;
+  username: string;
+  userID: string;
+};
+
 const SocketContext = createContext<{
   socket: Socket | null;
-  session: { id: string; username: string } | null;
-  handleChangeSession: (value: { id: string; username: string }) => void;
+  session: SessionType | null;
+  handleChangeSession: (value: SessionType) => void;
 } | null>(null);
 
 const socketEndpoint = "http://localhost:3000";
 
-const storeSession = async (value: { id: string; username: string }) => {
+const storeSession = async (value: SessionType) => {
   try {
     await AsyncStorage.setItem("my-key", JSON.stringify(value));
   } catch (e) {
@@ -39,10 +45,7 @@ const getSession = async () => {
 const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [connection, setConnection] = useState(false);
 
-  const [session, setSession] = useState<{
-    id: string;
-    username: string;
-  } | null>(null);
+  const [session, setSession] = useState<SessionType | null>(null);
 
   useEffect(() => {
     getSession().then((value) => {
@@ -52,13 +55,10 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     });
   }, []);
 
-  const handleChangeSession = useCallback(
-    async (value: { id: string; username: string }) => {
-      setSession(value);
-      await storeSession(value);
-    },
-    []
-  );
+  const handleChangeSession = useCallback(async (value: SessionType) => {
+    setSession(value);
+    await storeSession(value);
+  }, []);
 
   const socket = useRef<Socket | null>(null);
 
