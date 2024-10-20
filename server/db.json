@@ -4,13 +4,19 @@
       "userID": "4611eb3e-316d-434c-89a8-c6a769e19d12",
       "username": "Flpoliveira",
       "connected": true,
-      "last_connected": "2024-10-19T21:58:27.518Z"
+      "last_connected": "2024-10-20T19:05:38.712Z"
     },
     {
       "userID": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
       "username": "Joao",
-      "connected": true,
-      "last_connected": "2024-10-19T21:58:27.845Z"
+      "connected": false,
+      "last_connected": "2024-10-20T18:29:15.866Z"
+    },
+    {
+      "userID": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
+      "username": "Flpoliveira",
+      "connected": false,
+      "last_connected": "2024-10-20T19:15:18.586Z"
     }
   ],
   "messages": [
@@ -19,7 +25,7 @@
       "timestamp": "2024-10-19T21:58:22.324Z",
       "content": "Test",
       "from": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
-      "liked": false,
+      "liked": true,
       "to": "4611eb3e-316d-434c-89a8-c6a769e19d12"
     },
     {
@@ -27,7 +33,7 @@
       "timestamp": "2024-10-19T21:58:36.472Z",
       "content": "Hahahaha",
       "from": "4611eb3e-316d-434c-89a8-c6a769e19d12",
-      "liked": true,
+      "liked": false,
       "to": "ea0ca6ec-6328-4715-af14-4d628d1031b4"
     }
   ]

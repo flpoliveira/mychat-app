@@ -20,6 +20,7 @@ import { ChatConnect } from "@/components/ChatConnect";
 import { useMemo, useState } from "react";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import { DoubleTapLike } from "@/components/DoubleTapLike";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, "background");
@@ -108,6 +109,10 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </ThemedView>
           )}
+
+          <Link href="/camera">
+            <ThemedText>Go to Camera</ThemedText>
+          </Link>
           <TouchableOpacity onPress={() => clearStorage()}>
             <ThemedText>Disconnect</ThemedText>
           </TouchableOpacity>
