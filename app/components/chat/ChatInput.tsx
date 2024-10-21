@@ -26,9 +26,7 @@ function ChatInput({
         display: "flex",
         flexDirection: "row",
         padding: 8,
-        margin: 12,
         backgroundColor: "blue",
-        borderRadius: 99,
         gap: 8,
       }}
     >
@@ -38,10 +36,11 @@ function ChatInput({
         style={{
           color: "white",
           backgroundColor: "rgba(0, 0, 0, 0.8)",
-          flexGrow: 1,
           fontSize: 14,
           padding: 12,
           borderRadius: 8,
+          flexGrow: 1,
+          flexShrink: 1,
         }}
       />
       {showCamera ? (

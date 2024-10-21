@@ -42,7 +42,6 @@ export default function RootLayout() {
               name="camera/[userId]"
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="preview" />
             <Stack.Screen name="+not-found" />
           </Stack>
         </SocketProvider>

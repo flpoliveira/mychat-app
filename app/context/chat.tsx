@@ -66,7 +66,6 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     setAllUsers((prev) => {
       const newUsers = prev.map((user) => {
         if (user.userID === message.from || user.userID === message.to) {
-          console.log("Im here!");
           return {
             ...user,
             hasNewMessage: true,
