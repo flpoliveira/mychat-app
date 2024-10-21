@@ -78,8 +78,8 @@ export const findAllSessions = async () => {
 export const saveMessage = async (message) => {
   await db.read();
 
-  if (!message.from || !message.to || !message.content) {
-    throw new Error("from, to, and text are required");
+  if (!message.from || !message.to) {
+    throw new Error("from, to, and content are required");
   }
 
   if (db.data.messages.find((m) => m.id === message.id)) {

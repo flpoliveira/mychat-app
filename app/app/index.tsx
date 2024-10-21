@@ -60,8 +60,6 @@ export default function HomeScreen() {
     }
   };
 
-  const doubleTapRef = useRef();
-
   return (
     <SafeAreaView
       style={{
@@ -76,41 +74,14 @@ export default function HomeScreen() {
               data={otherUsers}
               keyExtractor={(item) => item.userID}
               renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => setSelectedUserID(item.userID)}
-                >
+                <Link href={`/chat/${item.userID}`}>
                   <ThemedText>{item.username}</ThemedText>
-                </TouchableOpacity>
+                </Link>
               )}
             />
-          )}
-          {messagesFromSelectedUser.length > 0 && (
-            <FlatList
-              data={messagesFromSelectedUser}
-              keyExtractor={(item) => `${item.timestamp}-${item.from}`}
-              renderItem={({ item }) => (
-                <DoubleTapLike onDoubleTap={() => likeMessage(item)}>
-                  <ThemedView>
-                    <ThemedText>
-                      {item.from}: {item.content}
-                    </ThemedText>
-                    {item.liked && <ThemedText>❤️</ThemedText>}
-                  </ThemedView>
-                </DoubleTapLike>
-              )}
-            />
-          )}
-          {selectedUserID && (
-            <ThemedView>
-              <ThemedText>Send a message</ThemedText>
-              <TextInput value={message} onChangeText={setMessage} />
-              <TouchableOpacity onPress={() => sendMessage()}>
-                <ThemedText>Send</ThemedText>
-              </TouchableOpacity>
-            </ThemedView>
           )}
 
-          <Link href="/camera">
+          <Link href="/chat/1233">
             <ThemedText>Go to Camera</ThemedText>
           </Link>
           <TouchableOpacity onPress={() => clearStorage()}>

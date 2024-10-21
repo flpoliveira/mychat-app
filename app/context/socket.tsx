@@ -41,6 +41,11 @@ const SocketContext = createContext<{
   connect: (username: string, userID?: string) => void;
   users: Array<UserType>;
   updateMessage: (message: Partial<UserMessageType>) => void;
+  sendMessage: (message: {
+    to: string;
+    content: string;
+    imgUrl?: string;
+  }) => void;
 } | null>(null);
 
 const socketEndpoint = "http://192.168.0.4:3000";
@@ -79,7 +84,6 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [users, setUsers] = useState<Array<UserType>>([]);
 
   const addMessage = useCallback((message: UserMessageType) => {
-    console.log("Addin new message: ", message);
     setUsers((prev) => {
       const newUsers = prev.map((user) => {
         if (user.userID === message.from || user.userID === message.to) {
@@ -173,6 +177,25 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     };
   }, [handleChangeSession, addMessage, updateMessage]);
 
+  const sendMessage = useCallback(
+    (message: { to: string; content: string; imgUrl?: string }) => {
+      console.log(
+        "Sending message...",
+        !!socketRef.current,
+        message.to,
+        session?.username
+      );
+      if (socketRef.current && message?.to && session?.username) {
+        socketRef.current.emit("private message", {
+          to: message.to,
+          content: message.content,
+          imgUrl: message.imgUrl,
+        });
+      }
+    },
+    []
+  );
+
   const connect = useCallback((username: string, userID?: string) => {
     if (socketRef.current && username) {
       socketRef.current.auth = { username, userID };
@@ -200,6 +223,7 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
         connect,
         users,
         updateMessage,
+        sendMessage,
       }}
     >
       {children}

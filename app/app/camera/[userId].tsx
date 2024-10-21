@@ -3,142 +3,90 @@ import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { ReactElement, useRef, useState } from "react";
 import {
   Button,
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
-function CameraButton({
-  children,
-  onPress,
-}: {
-  children: ReactElement;
-  onPress: () => void;
-}) {
-  return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      {children}
-    </TouchableOpacity>
-  );
-}
-
-function TakePictureButton({ onPress }: { onPress: () => void }) {
-  return (
-    <TouchableOpacity style={styles.takePictureButton} onPress={onPress}>
-      <View style={styles.takePictureCircle} />
-    </TouchableOpacity>
-  );
-}
-
-function ImagePreview({ uri, onClose }: { uri: string; onClose: () => void }) {
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{ position: "relative", flex: 1 }}>
-        <Image
-          source={{ uri }}
-          style={{
-            position: "absolute",
-            flex: 1,
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
-          resizeMode="contain"
-        />
-        <KeyboardAvoidingView
-          style={{ flex: 1, backgroundColor: "transparent" }}
-          behavior={Platform.OS === "ios" ? "padding" : undefined} // Adjust for different platforms
-          keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
-        >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
-            <View style={styles.cameraPreviewHeader}>
-              <CameraButton onPress={() => onClose()}>
-                <Ionicons name="close" size={24} color="white" />
-              </CameraButton>
-            </View>
-            <View style={styles.cameraPreviewFooter}>
-              <View style={styles.captionContainer}>
-                <TextInput
-                  placeholder="Add a caption..."
-                  placeholderTextColor="white"
-                  style={{
-                    color: "white",
-                    backgroundColor: "rgba(0, 0, 0, 0.8)",
-                    flex: 1,
-                    fontSize: 14,
-                    padding: 12,
-                    borderRadius: 8,
-                  }}
-                />
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <View style={styles.cameraPreviewDestination}>
-                  <Text style={{ color: "white", fontSize: 14 }}>John Doe</Text>
-                </View>
-                <TouchableOpacity onPress={() => null}>
-                  <LinearGradient
-                    // Corresponding to your CSS linear gradient
-                    colors={["#696EFF", "#ee76f9", "#F158FF"]}
-                    start={{ x: 0.5, y: 0.0 }} // Adjusts the starting point for the gradient
-                    end={{ x: 0.0, y: 1 }} // Adjusts the ending point for the gradient
-                    style={styles.button}
-                  >
-                    <Ionicons name="send" size={24} color="white" />
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-}
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { useSocket } from "@/context/socket";
+import { ImagePreview } from "@/components/camera/ImagePreview";
+import { CameraButton } from "@/components/camera/CameraButton";
+import { TakePictureButton } from "@/components/camera/TakePictureButton";
 
 function CameraScreen() {
+  const router = useRouter();
+  const [caption, setCaption] = useState("");
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [flash, setFlash] = useState<"on" | "off">("off");
   const cameraRef = useRef<CameraView>(null);
 
-  const [image, setImage] = useState<string | null>(null);
+  const { userId } = useLocalSearchParams();
+  const { sendMessage } = useSocket();
+
+  const [image, setImage] = useState<{
+    uri: string;
+    base64: string;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
 
   const takePicture = async () => {
     if (cameraRef.current && !loading) {
       setLoading(true);
       try {
-        const picture = await cameraRef.current.takePictureAsync();
-        setImage(picture?.uri || null);
+        const picture = await cameraRef.current.takePictureAsync({
+          base64: true,
+          quality: 0.5,
+          skipProcessing: false,
+        });
+
+        if (!picture || !picture.uri || !picture.base64) {
+          setLoading(false);
+          return;
+        }
+
+        setImage({
+          uri: picture.uri,
+          base64: picture.base64,
+        });
       } catch (error) {
         console.error("Failed to take picture", error);
       }
       setLoading(false);
     }
+  };
+
+  const onConfirm = async () => {
+    if (!image?.base64 || !userId) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://192.168.0.4:3001/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileName: "hahahaha.jpg",
+          base64: `data:image/jpeg;base64,${image.base64}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      const imgUrl = data.url as string;
+      sendMessage({
+        to: userId as string,
+        content: caption || "",
+        imgUrl,
+      });
+
+      router.back();
+    } catch (ex) {}
   };
 
   if (!permission) {
@@ -165,7 +113,13 @@ function CameraScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       {image ? (
-        <ImagePreview uri={image} onClose={() => setImage(null)} />
+        <ImagePreview
+          image={image}
+          onClose={() => setImage(null)}
+          caption={caption}
+          onChangeCaption={(e) => setCaption(e)}
+          onConfirm={onConfirm}
+        />
       ) : (
         <View style={styles.container}>
           <CameraView
@@ -175,7 +129,11 @@ function CameraScreen() {
             ref={cameraRef}
           >
             <View style={styles.buttonContainer}>
-              <CameraButton onPress={() => null}>
+              <CameraButton
+                onPress={() => {
+                  router.back();
+                }}
+              >
                 <Ionicons name="close" size={24} color="white" />
               </CameraButton>
               <CameraButton
