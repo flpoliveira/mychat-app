@@ -1,7 +1,9 @@
+import { ChatHeader } from "@/components/chat/ChatHeader";
+import { ChatInput } from "@/components/chat/ChatInput";
 import { ThemedText } from "@/components/ThemedText";
-import { useSocket } from "@/context/socket";
+import { useChat, useSocket } from "@/context/chat";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -14,36 +16,40 @@ import {
 export default function UserChat() {
   const { userId } = useLocalSearchParams();
 
-  const { sendMessage: socketSendMessage } = useSocket();
+  const { sendMessage, setSelectedUserID, selectedUser, messages } = useChat();
+
   const [message, setMessage] = useState("");
 
-  const sendMessage = () => {
+  const handleSendMessage = () => {
     console.log("Sending message", message, "to", userId);
     if (userId) {
-      socketSendMessage({
-        to: userId as string,
+      sendMessage({
         content: message,
       });
       setMessage("");
     }
   };
 
+  useEffect(() => {
+    setSelectedUserID(userId as string);
+  }, [setSelectedUserID]);
+
   return (
     <SafeAreaView>
       <Stack.Screen
         options={{
-          title: `Chat with user ${userId}`,
+          title: `${selectedUser?.username || "Chat"}`,
           headerBackTitleVisible: false,
+          headerTitle: () => <ChatHeader user={selectedUser} />,
         }}
       />
       <View>
-        <TextInput value={message} onChangeText={(e) => setMessage(e)} />
-        <TouchableOpacity onPress={() => sendMessage()}>
-          <ThemedText>Send</ThemedText>
-        </TouchableOpacity>
-        <Link href={`/camera/${userId}`}>
-          <ThemedText>Go to camera</ThemedText>
-        </Link>
+        <ChatInput
+          value={message}
+          onChange={(e) => setMessage(e)}
+          userId={userId as string}
+          onSend={handleSendMessage}
+        />
       </View>
     </SafeAreaView>
   );

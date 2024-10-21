@@ -47,7 +47,7 @@ io.on("connection", async (socket) => {
     userID: socket.userID,
     username: socket.username,
     connected: true,
-    last_connected: new Date().toISOString(),
+    lastActive: new Date().toISOString(),
   });
 
   console.log("user connected", socket.userID, socket.username);
@@ -77,6 +77,7 @@ io.on("connection", async (socket) => {
       userID: session.userID,
       username: session.username,
       connected: session.connected,
+      lastActive: session.lastActive,
       messages: messagesPerUser.get(session.userID) || [],
     });
   });
@@ -131,7 +132,7 @@ io.on("connection", async (socket) => {
         userID: socket.userID,
         username: socket.username,
         connected: false,
-        last_connected: new Date().toISOString(),
+        lastActive: new Date().toISOString(),
       });
     }
   });

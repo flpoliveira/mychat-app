@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useSocket } from "@/context/socket";
+import { useSocket } from "@/context/chat";
 import { ImagePreview } from "@/components/camera/ImagePreview";
 import { CameraButton } from "@/components/camera/CameraButton";
 import { TakePictureButton } from "@/components/camera/TakePictureButton";

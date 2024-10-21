@@ -1,86 +1,26 @@
 {
   "sessions": [
     {
-      "userID": "4611eb3e-316d-434c-89a8-c6a769e19d12",
+      "userID": "b971076e-0a13-4af3-be21-e8f8f0d066df",
+      "username": "Simulator",
+      "connected": true,
+      "lastActive": "2024-10-21T10:43:50.073Z"
+    },
+    {
+      "userID": "74ed062f-1d6d-4e20-8807-0deeb3c4f282",
       "username": "Flpoliveira",
       "connected": false,
-      "last_connected": "2024-10-20T23:46:29.102Z"
-    },
-    {
-      "userID": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
-      "username": "Joao",
-      "connected": false,
-      "last_connected": "2024-10-20T18:29:15.866Z"
-    },
-    {
-      "userID": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
-      "username": "Flpoliveira",
-      "connected": true,
-      "last_connected": "2024-10-21T10:00:18.437Z"
-    },
-    {
-      "userID": "bab639a3-a77c-4a49-9fee-dd2667d713d2",
-      "username": "Filipe",
-      "connected": false,
-      "last_connected": "2024-10-21T00:05:15.568Z"
-    },
-    {
-      "userID": "0b212365-c0e9-493e-a392-7feae18660e9",
-      "username": "Joao",
-      "connected": true,
-      "last_connected": "2024-10-21T10:00:02.738Z"
+      "lastActive": "2024-10-21T10:30:16.683Z"
     }
   ],
   "messages": [
     {
-      "id": "7df7b558-aabc-466d-a79e-bea29157020c",
-      "timestamp": "2024-10-19T21:58:22.324Z",
-      "content": "Test",
-      "from": "ea0ca6ec-6328-4715-af14-4d628d1031b4",
-      "liked": true,
-      "to": "4611eb3e-316d-434c-89a8-c6a769e19d12"
-    },
-    {
-      "id": "816ef2af-546e-4669-b459-9aa8e7928db0",
-      "timestamp": "2024-10-19T21:58:36.472Z",
-      "content": "Hahahaha",
-      "from": "4611eb3e-316d-434c-89a8-c6a769e19d12",
+      "id": "e1f45de2-48ca-444e-acf7-dc2d6228858f",
+      "timestamp": "2024-10-21T10:46:10.458Z",
+      "content": "Hahahahahaa",
+      "from": "b971076e-0a13-4af3-be21-e8f8f0d066df",
       "liked": false,
-      "to": "ea0ca6ec-6328-4715-af14-4d628d1031b4"
-    },
-    {
-      "id": "795f444c-b9da-4e61-a8ef-242d4387cebc",
-      "timestamp": "2024-10-21T00:20:46.636Z",
-      "content": "Tesyagsshhah",
-      "from": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
-      "liked": false,
-      "to": "0b212365-c0e9-493e-a392-7feae18660e9"
-    },
-    {
-      "id": "8af5ff10-4156-48a2-ae71-d76f0db6a149",
-      "timestamp": "2024-10-21T00:22:36.003Z",
-      "content": "",
-      "from": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
-      "liked": false,
-      "to": "0b212365-c0e9-493e-a392-7feae18660e9"
-    },
-    {
-      "id": "79a5670c-2493-4ef5-a201-c5a08cfb1afd",
-      "timestamp": "2024-10-21T00:23:22.690Z",
-      "content": "",
-      "from": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
-      "liked": false,
-      "to": "0b212365-c0e9-493e-a392-7feae18660e9",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729470202/xce2rckojj59ehayohey.jpg"
-    },
-    {
-      "id": "8ee43da3-fed2-40f3-8f88-60afd6c2a147",
-      "timestamp": "2024-10-21T00:31:38.125Z",
-      "content": "Testyy",
-      "from": "968dc266-594b-4d3f-ab4f-df3d50a517ea",
-      "liked": false,
-      "to": "0b212365-c0e9-493e-a392-7feae18660e9",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729470697/ddie8y9bvl3gyuxzptxm.jpg"
+      "to": "74ed062f-1d6d-4e20-8807-0deeb3c4f282"
     }
   ]
 }

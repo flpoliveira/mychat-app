@@ -12,9 +12,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { PrimaryBackground } from "../PrimaryBackground";
 import { Ionicons } from "@expo/vector-icons";
 import { CameraButton } from "./CameraButton";
+import { IconButton } from "../IconButton";
 
 function ImagePreview({
   image,
@@ -47,14 +47,7 @@ function ImagePreview({
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
+          <View style={styles.container}>
             <View style={styles.header}>
               <CameraButton onPress={() => onClose()}>
                 <Ionicons name="close" size={24} color="white" />
@@ -74,11 +67,9 @@ function ImagePreview({
                 <View style={styles.destination}>
                   <Text style={styles.destinationText}>{destination}</Text>
                 </View>
-                <TouchableOpacity onPress={() => onConfirm()}>
-                  <PrimaryBackground style={styles.button}>
-                    <Ionicons name="send" size={24} color="white" />
-                  </PrimaryBackground>
-                </TouchableOpacity>
+                <IconButton onPress={() => onConfirm()}>
+                  <Ionicons name="send" size={24} color="white" />
+                </IconButton>
               </View>
             </View>
           </View>
@@ -89,6 +80,12 @@ function ImagePreview({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
+  },
   image: {
     position: "absolute",
     flex: 1,
@@ -110,10 +107,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
   },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
   button: {
     backgroundColor: "#333230",
     borderRadius: 99,
@@ -124,7 +117,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 32,
-    // position: "absolute",
     top: 0,
     left: 0,
   },
@@ -133,7 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8,
     padding: 32,
-    // position: "absolute",
     bottom: 0,
     left: 0,
     width: "100%",

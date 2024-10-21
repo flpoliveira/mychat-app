@@ -15,50 +15,19 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { clearStorage, UserMessageType, useSocket } from "@/context/socket";
+import { useChat, useSocket } from "@/context/chat";
 import { ChatConnect } from "@/components/ChatConnect";
 import { useMemo, useState } from "react";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import { DoubleTapLike } from "@/components/DoubleTapLike";
 import { Link } from "expo-router";
+import clearSession from "@/helpers/clearSession";
 
 export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, "background");
 
-  const { session, users, socket, updateMessage } = useSocket();
-
-  const otherUsers = useMemo(() => {
-    return users.filter((u) => u.userID !== session?.userID);
-  }, [users]);
-
-  const [selectedUserID, setSelectedUserID] = useState("");
-  const messagesFromSelectedUser = useMemo(() => {
-    return (
-      otherUsers.find((u) => u.userID === selectedUserID)?.messages || []
-    ).sort(
-      (a, b) =>
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-    );
-  }, [selectedUserID, otherUsers]);
-  const [message, setMessage] = useState("");
-
-  const sendMessage = () => {
-    console.log("Sending message", message, "to", selectedUserID);
-    if (socket.current && selectedUserID && session?.username) {
-      socket.current.emit("private message", {
-        to: selectedUserID,
-        content: message,
-      });
-      setMessage("");
-    }
-  };
-
-  const likeMessage = (message: UserMessageType) => {
-    if (socket.current && session?.username && message.to === session.userID) {
-      socket.current.emit("like message", { id: message.id });
-      updateMessage({ ...message, liked: !message.liked });
-    }
-  };
+  const { session } = useSocket();
+  const { users } = useChat();
 
   return (
     <SafeAreaView
@@ -69,9 +38,9 @@ export default function HomeScreen() {
     >
       {!!session ? (
         <ThemedView style={{ flex: 1 }}>
-          {otherUsers.length > 0 && (
+          {users.length > 0 && (
             <FlatList
-              data={otherUsers}
+              data={users}
               keyExtractor={(item) => item.userID}
               renderItem={({ item }) => (
                 <Link href={`/chat/${item.userID}`}>
@@ -81,10 +50,7 @@ export default function HomeScreen() {
             />
           )}
 
-          <Link href="/chat/1233">
-            <ThemedText>Go to Camera</ThemedText>
-          </Link>
-          <TouchableOpacity onPress={() => clearStorage()}>
+          <TouchableOpacity onPress={() => clearSession()}>
             <ThemedText>Disconnect</ThemedText>
           </TouchableOpacity>
         </ThemedView>

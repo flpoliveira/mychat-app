@@ -1,4 +1,4 @@
-import { useSocket } from "@/context/socket";
+import { useSocket } from "@/context/chat";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import { useMemo, useState } from "react";
