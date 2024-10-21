@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useSocket } from "@/context/chat";
+import { useChat, useSocket } from "@/context/chat";
 import { ImagePreview } from "@/components/camera/ImagePreview";
 import { CameraButton } from "@/components/camera/CameraButton";
 import { TakePictureButton } from "@/components/camera/TakePictureButton";
@@ -29,11 +29,7 @@ function CameraScreen() {
   const cameraRef = useRef<CameraView>(null);
 
   const { userId } = useLocalSearchParams();
-  const { sendMessage, users } = useSocket();
-  const selectedUser = useMemo(
-    () => users.find((u) => u.userID === userId),
-    [userId, users]
-  );
+  const { sendMessage, selectedUser } = useChat();
 
   const [image, setImage] = useState<{
     uri: string;
@@ -86,7 +82,6 @@ function CameraScreen() {
 
       const imgUrl = data.url as string;
       sendMessage({
-        to: userId as string,
         content: caption || "",
         imgUrl,
       });

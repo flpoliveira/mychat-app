@@ -4,6 +4,7 @@ import { IconButton } from "../IconButton";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, StyleSheet } from "react-native";
+import { AutoExpandableTextInput } from "../AutoExpandableTextInput";
 
 function ChatInput({
   value,
@@ -31,10 +32,9 @@ function ChatInput({
         gap: 8,
       }}
     >
-      <TextInput
+      <AutoExpandableTextInput
         value={value}
         onChangeText={onChange}
-        multiline={true}
         style={{
           color: "white",
           backgroundColor: "rgba(0, 0, 0, 0.8)",

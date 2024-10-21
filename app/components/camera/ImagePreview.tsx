@@ -15,6 +15,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { CameraButton } from "./CameraButton";
 import { IconButton } from "../IconButton";
+import { AutoExpandableTextInput } from "../AutoExpandableTextInput";
 
 function ImagePreview({
   image,
@@ -55,7 +56,7 @@ function ImagePreview({
             </View>
             <View style={styles.footer}>
               <View style={styles.captionContainer}>
-                <TextInput
+                <AutoExpandableTextInput
                   placeholder="Add a caption..."
                   placeholderTextColor="white"
                   value={caption}
