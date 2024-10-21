@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, useMemo, useRef, useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Button,
   SafeAreaView,
   StyleSheet,
@@ -15,27 +17,33 @@ import { useSocket } from "@/context/socket";
 import { ImagePreview } from "@/components/camera/ImagePreview";
 import { CameraButton } from "@/components/camera/CameraButton";
 import { TakePictureButton } from "@/components/camera/TakePictureButton";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
 function CameraScreen() {
   const router = useRouter();
-  const [caption, setCaption] = useState("");
+
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [flash, setFlash] = useState<"on" | "off">("off");
   const cameraRef = useRef<CameraView>(null);
 
   const { userId } = useLocalSearchParams();
-  const { sendMessage } = useSocket();
+  const { sendMessage, users } = useSocket();
+  const selectedUser = useMemo(
+    () => users.find((u) => u.userID === userId),
+    [userId, users]
+  );
 
   const [image, setImage] = useState<{
     uri: string;
     base64: string;
   } | null>(null);
+  const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
 
   const takePicture = async () => {
     if (cameraRef.current && !loading) {
-      setLoading(true);
       try {
         const picture = await cameraRef.current.takePictureAsync({
           base64: true,
@@ -44,7 +52,6 @@ function CameraScreen() {
         });
 
         if (!picture || !picture.uri || !picture.base64) {
-          setLoading(false);
           return;
         }
 
@@ -55,7 +62,6 @@ function CameraScreen() {
       } catch (error) {
         console.error("Failed to take picture", error);
       }
-      setLoading(false);
     }
   };
 
@@ -64,6 +70,7 @@ function CameraScreen() {
       return;
     }
 
+    setLoading(true);
     try {
       const response = await fetch("http://192.168.0.4:3001/upload", {
         method: "POST",
@@ -71,8 +78,7 @@ function CameraScreen() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fileName: "hahahaha.jpg",
-          base64: `data:image/jpeg;base64,${image.base64}`,
+          file: `data:image/jpeg;base64,${image.base64}`,
         }),
       });
 
@@ -86,23 +92,35 @@ function CameraScreen() {
       });
 
       router.back();
-    } catch (ex) {}
+    } catch (ex) {
+      console.error("Failed to upload image", ex);
+      Alert.alert("Failed to upload image");
+    }
+    setLoading(false);
   };
 
   if (!permission) {
     // Camera permissions are still loading.
-    return <View />;
+    return <ThemedView />;
   }
 
   if (!permission.granted) {
     // Camera permissions are not granted yet.
     return (
-      <View style={styles.container}>
-        <Text style={styles.message}>
+      <ThemedView style={styles.container}>
+        <ThemedText style={styles.message}>
           We need your permission to show the camera
-        </Text>
+        </ThemedText>
         <Button onPress={requestPermission} title="grant permission" />
-      </View>
+      </ThemedView>
+    );
+  }
+
+  if (loading) {
+    return (
+      <ThemedView style={styles.container}>
+        <ActivityIndicator size="large" color="#F158FF" />
+      </ThemedView>
     );
   }
 
@@ -119,6 +137,7 @@ function CameraScreen() {
           caption={caption}
           onChangeCaption={(e) => setCaption(e)}
           onConfirm={onConfirm}
+          destination={selectedUser?.username || ""}
         />
       ) : (
         <View style={styles.container}>

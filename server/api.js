@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 cloudinary.config({
-  cloud_name: "dlggt4zhl",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
@@ -18,16 +18,16 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(express.json());
 
 app.post("/upload", async (req, res) => {
-  const { fileName, base64 } = req.body;
-  console.log("Received file: ", fileName);
-  if (!fileName || !base64) {
+  const { file } = req.body;
+  console.log("Received file");
+  if (!file) {
     return res
       .status(400)
-      .json({ message: "File name and base64 content are required" });
+      .json({ message: "File name and file content are required" });
   }
 
   try {
-    const uploadedField = await cloudinary.uploader.upload(base64, {
+    const uploadedField = await cloudinary.uploader.upload(file, {
       //optional things just if you want some storage optimization
       overwrite: true,
       invalidate: true,
