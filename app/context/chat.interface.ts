@@ -10,6 +10,7 @@ export type UserMessageType = {
   from: string;
   to: string;
   liked?: boolean;
+  imgUrl?: string;
 };
 
 export type UserType = {

@@ -1,23 +1,46 @@
+import { useRef } from "react";
 import { View } from "react-native";
-import { TapGestureHandler } from "react-native-gesture-handler";
+import {
+  HandlerStateChangeEvent,
+  State,
+  TapGestureHandler,
+  TapGestureHandlerEventPayload,
+} from "react-native-gesture-handler";
 
 const DoubleTapLike = ({
   onDoubleTap,
+  onSingleTap,
   children,
 }: {
   onDoubleTap: () => void;
+  onSingleTap: () => void;
   children: React.ReactNode;
 }) => {
+  const doubleTapRef = useRef();
+  const handleSingleTap = (
+    e: HandlerStateChangeEvent<TapGestureHandlerEventPayload>
+  ) => {
+    if (e.nativeEvent.state === State.ACTIVE) {
+      onSingleTap();
+    }
+  };
+
   return (
     <TapGestureHandler
-      onHandlerStateChange={({ nativeEvent }) => {
-        if (nativeEvent.state === 4) {
-          onDoubleTap();
-        }
-      }}
-      numberOfTaps={2}
+      onHandlerStateChange={handleSingleTap}
+      waitFor={doubleTapRef}
     >
-      <View>{children}</View>
+      <TapGestureHandler
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === 4) {
+            onDoubleTap();
+          }
+        }}
+        numberOfTaps={2}
+        ref={doubleTapRef}
+      >
+        <View>{children}</View>
+      </TapGestureHandler>
     </TapGestureHandler>
   );
 };

@@ -1,11 +1,13 @@
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { ImageFocus } from "@/components/chat/ImageFocus";
 import { Message } from "@/components/chat/Message";
 import { IconButton } from "@/components/IconButton";
 import { Label } from "@/components/Label";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useChat } from "@/context/chat";
+import { UserMessageType } from "@/context/chat.interface";
 import { getDayLabel } from "@/helpers/getDayLabel";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
@@ -49,6 +51,9 @@ export default function UserChat() {
   const sectionListRef = useRef<SectionList>(null);
   const [canScroll, setCanScroll] = useState(true);
   const [message, setMessage] = useState("");
+  const [imageFocused, setImageFocused] = useState<UserMessageType | null>(
+    null
+  );
 
   const handleSendMessage = () => {
     console.log("Sending message", message, "to", userId);
@@ -84,6 +89,18 @@ export default function UserChat() {
       scrollToEnd();
     }
   }, [canScroll, scrollToEnd]);
+
+  if (imageFocused) {
+    return (
+      <ImageFocus
+        from={imageFocused.from === userId ? selectedUser?.username : "You"}
+        imgUrl={imageFocused.imgUrl}
+        onClose={() => setImageFocused(null)}
+        timestamp={imageFocused.timestamp}
+        caption={imageFocused.content}
+      />
+    );
+  }
 
   return (
     // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -124,6 +141,7 @@ export default function UserChat() {
                 message={item}
                 isSelf={item.to === userId}
                 onLike={() => likeMessage(item)}
+                onImageFocus={() => setImageFocused(item)}
               />
             )}
             renderSectionHeader={({ section: { title } }) => (

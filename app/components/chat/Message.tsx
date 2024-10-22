@@ -1,5 +1,12 @@
 import { UserMessageType } from "@/context/chat.interface";
-import { Dimensions, View, Text } from "react-native";
+import {
+  Dimensions,
+  View,
+  Text,
+  Image,
+  Touchable,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import getRelativeTime from "@/helpers/getRelativeTime";
@@ -11,19 +18,29 @@ function Message({
   message,
   isSelf,
   onLike,
+  onImageFocus,
 }: {
   message: UserMessageType;
   isSelf: boolean;
   onLike: () => void;
+  onImageFocus: () => void;
 }) {
   const screenWidth = Dimensions.get("screen").width;
   const backgroundColor = useThemeColor(
     {},
     isSelf ? "selfMessageBackground" : "messageBackground"
   );
+  const hasImage = !!message.imgUrl;
 
   return (
-    <DoubleTapLike onDoubleTap={onLike}>
+    <DoubleTapLike
+      onDoubleTap={onLike}
+      onSingleTap={() => {
+        if (hasImage) {
+          onImageFocus();
+        }
+      }}
+    >
       <View
         style={{
           padding: 8,
@@ -42,6 +59,29 @@ function Message({
             maxWidth: screenWidth * 0.7,
           }}
         >
+          {hasImage && (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 8,
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  source={{ uri: message.imgUrl }}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </View>
+            </View>
+          )}
           <ThemedText style={{ flexWrap: "wrap" }} selectable>
             {message.content}
           </ThemedText>
