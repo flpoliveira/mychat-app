@@ -8,7 +8,6 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useChat } from "@/context/chat";
 import { UserMessageType } from "@/context/chat.interface";
-import { getDayLabel } from "@/helpers/getDayLabel";
 import getMessageItemLayout from "@/helpers/getMessageItemLayout";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
@@ -40,6 +39,7 @@ import {
 
 export default function UserChat() {
   const { userId } = useLocalSearchParams();
+  const router = useRouter();
 
   const {
     sendMessage,
@@ -91,7 +91,7 @@ export default function UserChat() {
     if (canScroll) {
       scrollToEnd();
     }
-  }, [canScroll, scrollToEnd]);
+  }, [scrollToEnd]);
 
   if (imageFocused) {
     return (
@@ -106,7 +106,6 @@ export default function UserChat() {
   }
 
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <SafeAreaView
       style={{
         backgroundColor,
@@ -144,7 +143,9 @@ export default function UserChat() {
                 message={item}
                 isSelf={item.to === userId}
                 onLike={() => likeMessage(item)}
-                onImageFocus={() => setImageFocused(item)}
+                onImageFocus={() => {
+                  router.push(`/chat/image/${item.id}`);
+                }}
               />
             )}
             renderSectionHeader={({ section: { title } }) => (
@@ -153,7 +154,10 @@ export default function UserChat() {
               </Label>
             )}
             onLayout={() => {
-              scrollToEnd();
+              console.log("Layout");
+              if (canScroll) {
+                scrollToEnd();
+              }
             }}
             contentContainerStyle={{ paddingBottom: 80 }}
             style={{ paddingVertical: 8, flexGrow: 1 }}
@@ -201,6 +205,5 @@ export default function UserChat() {
         </ThemedView>
       </KeyboardAvoidingView>
     </SafeAreaView>
-    // </TouchableWithoutFeedback>
   );
 }

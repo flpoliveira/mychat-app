@@ -34,6 +34,7 @@ const ChatContext = createContext<{
   selectedUser: UserType | null;
   setSelectedUserID: (id: string) => void;
   users: Array<UserType>;
+  findMessage: (id?: string) => UserMessageType | undefined;
 } | null>(null);
 
 const socketEndpoint = "http://192.168.0.4:3000";
@@ -66,6 +67,20 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
 
     return buildMessagesPerDay(selectedUser.messages || []);
   }, [selectedUser]);
+
+  const findMessage = useCallback(
+    (id?: string) => {
+      if (!id) {
+        return;
+      }
+
+      return allUsers
+        .map((u) => u.messages || [])
+        .flat()
+        .find((m) => m.id === id);
+    },
+    [allUsers]
+  );
 
   const addStoreMessage = useCallback((message: UserMessageType) => {
     setAllUsers((prev) => {
@@ -229,6 +244,7 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
           selectedUser,
           setSelectedUserID,
           users: otherUsers,
+          findMessage,
         }}
       >
         {children}

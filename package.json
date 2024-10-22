@@ -9,7 +9,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "expo-image-picker": "~15.0.7"
+  },
   "workspaces": [
     "app",
     "server",

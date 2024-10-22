@@ -1,14 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { ReactElement, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
   Button,
   SafeAreaView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -19,6 +17,7 @@ import { CameraButton } from "@/components/camera/CameraButton";
 import { TakePictureButton } from "@/components/camera/TakePictureButton";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import * as ImagePicker from "expo-image-picker";
 
 function CameraScreen() {
   const router = useRouter();
@@ -58,6 +57,30 @@ function CameraScreen() {
       } catch (error) {
         console.error("Failed to take picture", error);
       }
+    }
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 0.5,
+      base64: true,
+      selectionLimit: 1,
+    });
+
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      const base64 = result.assets[0].base64;
+
+      if (!uri || !base64) {
+        return;
+      }
+
+      setImage({
+        uri,
+        base64,
+      });
     }
   };
 
@@ -163,7 +186,7 @@ function CameraScreen() {
               </CameraButton>
             </View>
             <View style={styles.buttonContainer}>
-              <CameraButton onPress={() => null}>
+              <CameraButton onPress={() => pickImage()}>
                 <Ionicons name="image" size={24} color="white" />
               </CameraButton>
               <TakePictureButton onPress={() => takePicture()} />

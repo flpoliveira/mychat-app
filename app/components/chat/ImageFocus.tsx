@@ -13,7 +13,7 @@ function ImageFocus({
 }: {
   imgUrl?: string;
   from?: string;
-  timestamp: string;
+  timestamp?: string;
   onClose: () => void;
   caption?: string;
 }) {
@@ -29,11 +29,6 @@ function ImageFocus({
         resizeMode="contain"
       />
       <View style={styles.container}>
-        <View style={styles.header}>
-          <CameraButton onPress={() => onClose()}>
-            <Ionicons name="close" size={24} color="white" />
-          </CameraButton>
-        </View>
         <View style={styles.footer}>
           {caption && (
             <View style={styles.captionContainer}>
@@ -43,7 +38,7 @@ function ImageFocus({
           <View style={styles.buttonContainer}>
             <View style={styles.destination}>
               <Text style={styles.destinationText}>
-                Sent by {from} at {new Date(timestamp).toDateString()}
+                Sent by {from} at {new Date(timestamp || "").toDateString()}
               </Text>
             </View>
           </View>
@@ -56,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     height: "100%",
   },
   image: {
