@@ -50,7 +50,8 @@ export default function UserChat() {
   } = useChat();
   const backgroundColor = useThemeColor({}, "background");
 
-  const sectionListRef = useRef<SectionList>(null);
+  const sectionListRef =
+    useRef<SectionList<UserMessageType, { title: string }>>(null);
   const [canScroll, setCanScroll] = useState(true);
   const [message, setMessage] = useState("");
   const [imageFocused, setImageFocused] = useState<UserMessageType | null>(
@@ -135,7 +136,7 @@ export default function UserChat() {
             flex: 1,
           }}
         >
-          <SectionList
+          <SectionList<UserMessageType, { title: string }>
             sections={messages}
             keyExtractor={(item, index) => item.id || index.toString()}
             renderItem={({ item }) => (
@@ -174,41 +175,7 @@ export default function UserChat() {
               return getMessageItemLayout(data, index);
             }}
           />
-          {/* <ScrollView
-            style={{ flex: 1, paddingVertical: 8 }}
-            ref={scrollViewRef}
-            onContentSizeChange={() => {
-              if (canScroll) {
-                scrollViewRef?.current?.scrollToEnd({ animated: true });
-              }
-            }}
-           
-            contentContainerStyle={{ paddingBottom: 50 }}
-          >
-            <ThemedView style={{ flexGrow: 1 }}>
-              {days.map((day, index) => {
-                const dayMessages = messages[day];
-                return (
-                  <Fragment>
-                    <Label>
-                      <ThemedText type="smallSemiBold">
-                        {getDayLabel(day)}
-                      </ThemedText>
-                    </Label>
-                    {dayMessages.map((message, index) => {
-                      return (
-                        <Message
-                          message={message}
-                          isSelf={message.to === userId}
-                        />
-                      );
-                    })}
-                  </Fragment>
-                );
-              })}
-              
-            </ThemedView>
-          </ScrollView> */}
+
           {!canScroll && (
             <View
               style={{

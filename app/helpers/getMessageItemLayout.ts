@@ -1,4 +1,5 @@
 import { UserMessageType } from "@/context/chat.interface";
+import { SectionListData } from "react-native";
 
 function countNumberOfLines(text: string): number {
   const splited = text.split("\n");
@@ -9,7 +10,14 @@ function countNumberOfLines(text: string): number {
 }
 
 function getMessageItemLayout(
-  item: Array<{ title: string; data: UserMessageType[] }>,
+  item:
+    | SectionListData<
+        UserMessageType,
+        {
+          title: string;
+        }
+      >[]
+    | null,
   rowIndex: number
 ): {
   length: number;
@@ -43,8 +51,6 @@ function getMessageItemLayout(
     countNumberOfLines(allMessages?.[rowIndex]?.content || "") * 24 +
     40 +
     (allMessages?.[rowIndex]?.imgUrl ? 200 : 0);
-
-  console.log("offset", offset, "length", length, "index", rowIndex);
 
   return {
     length,
