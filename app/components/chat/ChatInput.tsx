@@ -1,10 +1,10 @@
-import { TextInput } from "react-native-gesture-handler";
 import { ThemedView } from "../ThemedView";
 import { IconButton } from "../IconButton";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { AutoExpandableTextInput } from "../AutoExpandableTextInput";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 function ChatInput({
   value,
@@ -20,28 +20,15 @@ function ChatInput({
   const router = useRouter();
   const showCamera = value === "";
 
+  const color = useThemeColor({}, "text");
+
   return (
-    <ThemedView
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        padding: 8,
-        backgroundColor: "blue",
-        gap: 8,
-      }}
-    >
+    <ThemedView style={styles.container}>
       <AutoExpandableTextInput
         value={value}
         onChangeText={onChange}
-        style={{
-          color: "white",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          fontSize: 14,
-          padding: 12,
-          borderRadius: 8,
-          flexGrow: 1,
-          flexShrink: 1,
-        }}
+        style={styles.input}
+        placeholder="Type a message..."
       />
       {showCamera ? (
         <TouchableOpacity
@@ -50,7 +37,7 @@ function ChatInput({
           }}
           style={styles.button}
         >
-          <Ionicons name="camera" size={24} color="white" />
+          <Ionicons name="camera" size={24} color={color} />
         </TouchableOpacity>
       ) : (
         <IconButton onPress={onSend}>
@@ -66,6 +53,19 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     padding: 8,
     maxHeight: 56,
+  },
+  input: {
+    fontSize: 14,
+    padding: 12,
+    borderRadius: 8,
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 8,
+    gap: 8,
   },
 });
 

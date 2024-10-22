@@ -1,14 +1,21 @@
-import { useState } from "react";
 import { StyleProp, TextInput, TextInputProps, TextStyle } from "react-native";
+import { ThemedInput } from "./ThemedInput";
 
 function AutoExpandableTextInput(
   props: {
     value: string;
     style: StyleProp<TextStyle>;
+    type?: "default" | "title" | "defaultSemiBold" | "subtitle";
+    lightColor?: string;
+    darkColor?: string;
   } & TextInputProps
 ) {
   return (
-    <TextInput {...props} style={[props.style, { maxHeight: 80 }]} multiline />
+    <ThemedInput
+      {...props}
+      style={[props.style, { maxHeight: 80 }]}
+      multiline
+    />
   );
 }
 

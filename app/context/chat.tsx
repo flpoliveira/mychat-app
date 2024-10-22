@@ -13,6 +13,7 @@ import { io, Socket } from "socket.io-client";
 import { SessionType, UserMessageType, UserType } from "./chat.interface";
 import getSession from "@/helpers/getSession";
 import storeSession from "@/helpers/storeSession";
+import { buildMessagesPerDay } from "@/helpers/buildMessagesPerDay";
 
 const SocketContext = createContext<{
   socket: MutableRefObject<Socket | null>;
@@ -24,7 +25,10 @@ const SocketContext = createContext<{
 } | null>(null);
 
 const ChatContext = createContext<{
-  messages: Array<UserMessageType>;
+  messages: Array<{
+    title: string;
+    data: UserMessageType[];
+  }>;
   sendMessage: (message: { content: string; imgUrl?: string }) => void;
   likeMessage: (message: UserMessageType) => void;
   selectedUser: UserType | null;
@@ -59,8 +63,9 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     if (!selectedUser) {
       return [];
     }
-    return selectedUser.messages || [];
-  }, []);
+
+    return buildMessagesPerDay(selectedUser.messages || []);
+  }, [selectedUser]);
 
   const addStoreMessage = useCallback((message: UserMessageType) => {
     setAllUsers((prev) => {

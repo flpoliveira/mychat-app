@@ -14,6 +14,11 @@ export const Colors = {
     icon: "#687076",
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
+    inputBackground: "#F2F2F9",
+    placeholder: "#687076",
+    messageBackground: "#F5F5FA",
+    selfMessageBackground: "#E9F2FF",
+    labelBackground: "#E9F2FF",
   },
   dark: {
     text: "#ECEDEE",
@@ -22,5 +27,10 @@ export const Colors = {
     icon: "#9BA1A6",
     tabIconDefault: "#9BA1A6",
     tabIconSelected: tintColorDark,
+    inputBackground: "#0D0D06",
+    placeholder: "#9BA1A6",
+    messageBackground: "#0A0A05",
+    selfMessageBackground: "#160D00",
+    labelBackground: "#160D00",
   },
 };
