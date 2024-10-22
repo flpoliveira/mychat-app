@@ -9,6 +9,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useChat } from "@/context/chat";
 import { UserMessageType } from "@/context/chat.interface";
 import { getDayLabel } from "@/helpers/getDayLabel";
+import getMessageItemLayout from "@/helpers/getMessageItemLayout";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -34,6 +35,7 @@ import {
   Keyboard,
   ScrollView,
   SectionList,
+  SectionListData,
 } from "react-native";
 
 export default function UserChat() {
@@ -156,13 +158,6 @@ export default function UserChat() {
             style={{ paddingVertical: 8, flexGrow: 1 }}
             stickySectionHeadersEnabled={false}
             ref={sectionListRef}
-            onScrollToIndexFailed={() => {
-              console.log("Scroll to index failed");
-              const wait = new Promise((resolve) => setTimeout(resolve, 50));
-              wait.then(() => {
-                scrollToEnd();
-              });
-            }}
             onScroll={(e) => {
               const scrollPosition = e.nativeEvent.contentOffset.y;
               const scrollHeight = e.nativeEvent.contentSize.height;
@@ -174,6 +169,9 @@ export default function UserChat() {
               } else {
                 setCanScroll(false);
               }
+            }}
+            getItemLayout={(data, index) => {
+              return getMessageItemLayout(data, index);
             }}
           />
           {/* <ScrollView
