@@ -68,3 +68,14 @@ The mobile app uses two main contexts:
 - **Chat Context:** Handles chat operations such as sending messages, sending likes, etc.
 
 The app was created using Expo SDK 51 and utilizes Expo Router for navigation. It supports both light and dark modes.
+
+
+## Future Improvements
+Given the 5-day development timeline, I focused on the essential features. However, in a real-world scenario, I would implement the following improvements:
+
+- **Clustered WebSocket Server:** Scale the WebSocket server into a [https://socket.io/get-started/private-messaging-part-4/](cluster) where multiple workers would handle requests for improved performance.
+- **Real Database**: Replace LowDB with a relational database like PostgreSQL or a NoSQL alternative to handle data more efficiently.
+- **Authentication:** Implement a sign-in and sign-out system with token-based authentication. The token would be used both in the WebSocket middleware and API requests.
+- **User Avatar Customization:** Allow users to change or customize their avatars for an improved user experience.
+- **Paginated Message Retrieval:** Modify the project to retrieve messages using paginated API requests. The WebSocket would only handle new messages or updates, while the mobile app would fetch data using Tanstack Query for more efficient message and user retrieval.
+
