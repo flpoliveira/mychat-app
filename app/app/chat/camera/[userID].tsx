@@ -18,6 +18,9 @@ import { TakePictureButton } from "@/components/camera/TakePictureButton";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
+
+const API = Constants?.expoConfig?.extra?.apiUrl ?? "http://localhost:3001";
 
 function CameraScreen() {
   const router = useRouter();
@@ -91,7 +94,7 @@ function CameraScreen() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://192.168.0.4:3001/upload", {
+      const response = await fetch(`${API}/upload`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

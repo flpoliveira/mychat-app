@@ -64,7 +64,8 @@
       "eas": {
         "projectId": "73748d42-d7ee-4f1d-9988-b378ac78ff47"
       },
-      "socketUrl": "http://192.168.0.4:3000"
+      "socketUrl": "http://192.168.0.4:3000",
+      "apiUrl": "http://192.168.0.4:3001"
     },
     "owner": "flpoliveira"
   }
