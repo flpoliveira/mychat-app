@@ -1,5 +1,3 @@
-# MyChat App
-
 ![logo](https://github.com/user-attachments/assets/79fb0f6f-c736-4b61-a543-8cd711502878)
 
 A new way of chatting with people. With MyChat, you can join a chat using a username, see who's online, send and receive messages and pictures, and even send likes by double-tapping on each message. Experience a fresh, engaging way of communication.
