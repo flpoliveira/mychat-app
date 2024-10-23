@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo, useState } from "react";
 
 import { ThemedText } from "@/components/ThemedText";
@@ -65,7 +65,7 @@ export default function HomeScreen() {
           <Logo style={{ width: 100, height: 50 }} />
           <SearchInput onSearch={(e) => setSearch(e)} />
           {usersFiltered.length > 0 ? (
-            <List users={usersFiltered} />
+            <List users={usersFiltered} sessionUserID={session?.userID} />
           ) : (
             <View style={styles.emptyList}>
               <ThemedText>No users found</ThemedText>

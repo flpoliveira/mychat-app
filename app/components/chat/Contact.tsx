@@ -4,9 +4,8 @@ import { ThemedView } from "../ThemedView";
 import { PlaceholderImage } from "../PlaceholderImage";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { StyleSheet } from "react-native";
-import { first } from "lodash";
 
-function Contact({ user }: { user: UserType }) {
+function Contact({ user, isFromMe }: { user: UserType; isFromMe: boolean }) {
   const color = useThemeColor({}, "secondaryText");
   const lastMessage = user?.lastMessage;
   const status = user?.connected ? "online" : "offline";
@@ -14,7 +13,9 @@ function Contact({ user }: { user: UserType }) {
   const messageContent = lastMessage?.content
     ? `${lastMessage.content}`
     : lastMessage?.imgUrl
-    ? "Sent you a picture"
+    ? isFromMe
+      ? "You sent a picture"
+      : "Sent you a picture"
     : "No messages";
 
   return (

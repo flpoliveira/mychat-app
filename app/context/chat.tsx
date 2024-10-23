@@ -50,7 +50,7 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [messages, setMessages] = useState<UserMessageType[]>([]);
   const messagesWithDays = useMemo(
     () => buildMessagesWithDays(messages),
-    [messages, loadingPrivateMessages]
+    [messages]
   );
 
   const findMessage = useCallback(

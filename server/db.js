@@ -60,11 +60,13 @@ export const saveSession = async (session) => {
 
 export const findLastMessageForUser = async (userA, userB) => {
   await db.read();
-  return db.data.messages.find(
-    (message) =>
-      (message.from === userA && message.to === userB) ||
-      (message.to === userA && message.from === userB)
-  );
+  return db.data.messages
+    .filter(
+      (message) =>
+        (message.from === userA && message.to === userB) ||
+        (message.to === userA && message.from === userB)
+    )
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
 };
 
 export const findMessagesForUser = async (userA, userB) => {

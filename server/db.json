@@ -19,15 +19,57 @@
       "username": "John",
       "imgUrl": "https://api.multiavatar.com/6fbdda38-f717-495e-b2d0-7cfa7a4a04ec.png",
       "connected": true,
-      "lastActive": "2024-10-23T12:23:12.808Z"
+      "lastActive": "2024-10-23T12:50:54.830Z"
     },
     {
       "userID": "cfe44e94-700a-4098-bf78-826c0feb7f82",
       "username": "Samantha",
       "imgUrl": "https://api.multiavatar.com/b7a292bf-6a8d-43dc-8bd8-b0927378c61d.png",
+      "connected": false,
+      "lastActive": "2024-10-23T12:32:18.273Z"
+    },
+    {
+      "userID": "d67f60c3-6199-4065-9060-5c1334c8cefa",
+      "username": "Maria",
+      "imgUrl": "https://api.multiavatar.com/e5b44196-96c6-4cd2-b369-c626d64cda30.png",
       "connected": true,
-      "lastActive": "2024-10-23T12:23:30.693Z"
+      "lastActive": "2024-10-23T12:50:55.077Z"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": "3d39c04f-48b9-4d57-b1b6-a3a208f0032b",
+      "timestamp": "2024-10-23T12:33:19.204Z",
+      "content": "Hello John! ",
+      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
+      "liked": false,
+      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5"
+    },
+    {
+      "id": "2c5cc229-994b-44f4-8605-bcde2cceee38",
+      "timestamp": "2024-10-23T12:33:31.278Z",
+      "content": "Hey Maria, nice to see you in this chat!",
+      "from": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
+      "liked": true,
+      "to": "d67f60c3-6199-4065-9060-5c1334c8cefa"
+    },
+    {
+      "id": "0bef25dc-d4f0-4a6a-9e8a-2f0f5e964178",
+      "timestamp": "2024-10-23T12:33:52.637Z",
+      "content": "Check out this cool image! ",
+      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
+      "liked": true,
+      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729686832/lxpxkn5m7o8ttdz8hhi2.jpg"
+    },
+    {
+      "id": "2750e52f-f211-4221-b5e9-cfe7befd4519",
+      "timestamp": "2024-10-23T12:41:26.563Z",
+      "content": "",
+      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
+      "liked": false,
+      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729687285/hbtbjwxyqwl0dres1aw5.jpg"
+    }
+  ]
 }
