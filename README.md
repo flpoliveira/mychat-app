@@ -76,6 +76,7 @@ The app was created using Expo SDK 51 and utilizes Expo Router for navigation. I
 ## Future Improvements
 Given the 5-day development timeline, I focused on the essential features. However, in a real-world scenario, I would implement the following improvements:
 
+- **Push Notifications:** The app currently lacks a push notification system, which is essential for a messaging app. In a real-world scenario, I would integrate Firebase Cloud Messaging (FCM) for Android and Apple Push Notification Service (APNS) for iOS, using AWS Simple Notification Service (SNS) as the intermediary to manage notifications across platforms.
 - **Clustered WebSocket Server:** Scale the WebSocket server into a [cluster](https://socket.io/get-started/private-messaging-part-4/) where multiple workers would handle requests for improved performance.
 - **Real Database**: Replace LowDB with a relational database like PostgreSQL or a NoSQL alternative to handle data more efficiently.
 - **Authentication:** Implement a sign-in and sign-out system with token-based authentication. The token would be used both in the WebSocket middleware and API requests.
