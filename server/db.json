@@ -22,33 +22,45 @@
       "lastActive": "2024-10-23T12:32:18.273Z"
     },
     {
-      "userID": "d67f60c3-6199-4065-9060-5c1334c8cefa",
-      "username": "Maria",
-      "imgUrl": "https://api.multiavatar.com/e5b44196-96c6-4cd2-b369-c626d64cda30.png",
-      "connected": false,
-      "lastActive": "2024-10-23T12:54:32.523Z"
-    },
-    {
-      "userID": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "username": "Test",
-      "imgUrl": "https://api.multiavatar.com/a40df839-9b2b-4c89-ace1-5e6763fbaca0.png",
-      "connected": false,
-      "lastActive": "2024-10-23T13:59:46.880Z"
-    },
-    {
-      "userID": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "username": "Ethan",
-      "imgUrl": "https://api.multiavatar.com/8487ec77-a426-4c21-9cec-0b0ce01bd38f.png",
+      "userID": "6ef9ea39-e57a-4d28-8209-56eb8072e620",
+      "username": "Jose",
+      "imgUrl": "https://api.multiavatar.com/1ecfdcf2-8719-4363-b865-0370e2bcfda4.png",
       "connected": true,
-      "lastActive": "2024-10-23T14:12:26.384Z"
+      "lastActive": "2024-10-23T14:21:02.832Z"
     },
     {
-      "userID": "9f8ab70d-20b3-4bb0-8761-317281b567b3",
-      "username": "testtt",
-      "imgUrl": "https://api.multiavatar.com/cf1b1a6e-e643-48f8-9179-00535408d96f.png",
+      "userID": "4b7be0bd-93d0-4144-903f-fba8b8617596",
+      "username": "Ethan",
+      "imgUrl": "https://api.multiavatar.com/3b1d1036-6db1-4a4e-8b86-aef434a281cd.png",
       "connected": false,
-      "lastActive": "2024-10-23T14:07:44.779Z"
+      "lastActive": "2024-10-23T14:19:12.479Z"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": "ddd5e923-7d0e-45ed-a155-b092c9aa843f",
+      "timestamp": "2024-10-23T14:17:25.719Z",
+      "content": "Hey Jose, How are you?",
+      "from": "4b7be0bd-93d0-4144-903f-fba8b8617596",
+      "liked": false,
+      "to": "6ef9ea39-e57a-4d28-8209-56eb8072e620"
+    },
+    {
+      "id": "d52ff848-8507-476b-98c0-8fdee40520ae",
+      "timestamp": "2024-10-23T14:17:41.914Z",
+      "content": "Hey Ethan, Im doing good, how about you?",
+      "from": "6ef9ea39-e57a-4d28-8209-56eb8072e620",
+      "liked": true,
+      "to": "4b7be0bd-93d0-4144-903f-fba8b8617596"
+    },
+    {
+      "id": "6417622b-7692-4e7c-a49b-56840982f403",
+      "timestamp": "2024-10-23T14:17:54.362Z",
+      "content": "",
+      "from": "4b7be0bd-93d0-4144-903f-fba8b8617596",
+      "liked": true,
+      "to": "6ef9ea39-e57a-4d28-8209-56eb8072e620",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729693074/ppbeln47fjop2fzmabbd.jpg"
+    }
+  ]
 }
