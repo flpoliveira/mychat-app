@@ -1,3 +1,4 @@
+import { SessionType } from "@/context/chat.interface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const storeSession = async (value: SessionType) => {

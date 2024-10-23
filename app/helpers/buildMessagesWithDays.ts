@@ -2,9 +2,15 @@ import { UserMessageType } from "@/context/chat.interface";
 import { getDayLabel } from "./getDayLabel";
 import lodash from "lodash";
 
-function buildMessagesPerDay(
+function buildMessagesWithDays(
   messages: UserMessageType[]
 ): Array<{ type?: "date" } & UserMessageType> {
+  if (!messages.length) {
+    return [
+      { content: "Today", type: "date" } as { type: "date" } & UserMessageType,
+    ];
+  }
+
   const groupedMessages = lodash.groupBy(messages, (message) => {
     return new Date(message.timestamp).toDateString();
   });
@@ -21,4 +27,4 @@ function buildMessagesPerDay(
   });
 }
 
-export { buildMessagesPerDay };
+export { buildMessagesWithDays };

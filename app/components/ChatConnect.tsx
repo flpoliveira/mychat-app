@@ -19,6 +19,7 @@ import { ThemedInput } from "./ThemedInput";
 import { PrimaryBackground } from "./PrimaryBackground";
 import uuid from "react-native-uuid";
 import { PlaceholderImage } from "./PlaceholderImage";
+import { Logo } from "./Logo";
 
 function ChatConnect() {
   const { socket, connect } = useSocket();
@@ -134,11 +135,7 @@ function ChatConnect() {
                 gap: 10,
               }}
             >
-              <Image
-                source={require("../assets/images/logo.png")}
-                resizeMode="contain"
-                style={{ width: 200, height: 100 }}
-              />
+              <Logo style={{ width: 200, height: 100 }} />
             </ThemedView>
             <ThemedInput
               placeholder="Enter your username"

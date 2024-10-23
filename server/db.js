@@ -58,6 +58,13 @@ export const saveSession = async (session) => {
   await db.write();
 };
 
+export const findLastMessageForUser = async (userID) => {
+  await db.read();
+  return db.data.messages.find(
+    (message) => message.from === userID || message.to === userID
+  );
+};
+
 export const findMessagesForUser = async (userID) => {
   await db.read();
   return db.data.messages.filter(

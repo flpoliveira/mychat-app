@@ -13,7 +13,7 @@ import { io, Socket } from "socket.io-client";
 import { SessionType, UserMessageType, UserType } from "./chat.interface";
 import getSession from "@/helpers/getSession";
 import storeSession from "@/helpers/storeSession";
-import { buildMessagesPerDay } from "@/helpers/buildMessagesPerDay";
+import { buildMessagesWithDays } from "@/helpers/buildMessagesWithDays";
 
 const SocketContext = createContext<{
   socket: MutableRefObject<Socket | null>;
@@ -29,17 +29,20 @@ const SocketContext = createContext<{
 } | null>(null);
 
 const ChatContext = createContext<{
-  messages: Array<
+  messages: Array<UserMessageType>;
+  messagesWithDays: Array<
     {
       type?: "date";
     } & UserMessageType
   >;
+  connectPrivateChat: (to: string) => void;
   sendMessage: (message: { content: string; imgUrl?: string }) => void;
   likeMessage: (message: UserMessageType) => void;
   selectedUser: UserType | null;
   setSelectedUserID: (id: string) => void;
   users: Array<UserType>;
   findMessage: (id?: string) => UserMessageType | undefined;
+  loadingPrivateMessages?: boolean;
 } | null>(null);
 
 const socketEndpoint = "http://192.168.0.4:3000";
@@ -50,6 +53,8 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [session, setSession] = useState<SessionType | null>(null);
   const [allUsers, setAllUsers] = useState<Array<UserType>>([]);
   const [selectedUserID, setSelectedUserID] = useState<string | null>(null);
+
+  const [loadingPrivateMessages, setLoadingPrivateMessages] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -65,13 +70,11 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     return allUsers.filter((u) => u.userID !== session?.userID);
   }, [allUsers]);
 
-  const messages = useMemo(() => {
-    if (!selectedUser) {
-      return [];
-    }
-
-    return buildMessagesPerDay(selectedUser.messages || []);
-  }, [selectedUser]);
+  const [messages, setMessages] = useState<UserMessageType[]>([]);
+  const messagesWithDays = useMemo(
+    () => buildMessagesWithDays(messages),
+    [messages, loadingPrivateMessages]
+  );
 
   const findMessage = useCallback(
     (id?: string) => {
@@ -79,48 +82,36 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
         return;
       }
 
-      return allUsers
-        .map((u) => u.messages || [])
-        .flat()
-        .find((m) => m.id === id);
+      return messages.find((m) => m.id === id);
     },
-    [allUsers]
+    [messages]
   );
 
   const addStoreMessage = useCallback((message: UserMessageType) => {
     setAllUsers((prev) => {
-      const newUsers = prev.map((user) => {
-        if (user.userID === message.from || user.userID === message.to) {
+      return prev.map((u) => {
+        if (u.userID === message.from || u.userID === message.to) {
           return {
-            ...user,
-            hasNewMessage: true,
-            messages: [...(user.messages || []), message],
+            ...u,
+            lastMessage: message,
           };
         }
-        return user;
+        return u;
       });
-      return newUsers;
     });
+    setMessages((prev) => [...prev, message]);
   }, []);
 
   const updateStoreMessage = useCallback(
     (message: Partial<UserMessageType>) => {
-      setAllUsers((prev) => {
-        const newUsers = prev.map((user) => {
-          if (user.userID === message.from || user.userID === message.to) {
-            return {
-              ...user,
-              messages: user.messages?.map((msg) => {
-                if (msg.id === message.id) {
-                  return { ...msg, ...message };
-                }
-                return msg;
-              }),
-            };
+      setMessages((prev) => {
+        const newMessages = prev.map((msg) => {
+          if (msg.id === message.id) {
+            return { ...msg, ...message };
           }
-          return user;
+          return msg;
         });
-        return newUsers;
+        return newMessages;
       });
     },
     []
@@ -168,6 +159,16 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     }
   };
 
+  const connectPrivateChat = useCallback(
+    (to: string) => {
+      if (socketRef.current && session?.username) {
+        socketRef.current.emit("private chat", { to });
+        setLoadingPrivateMessages(true);
+      }
+    },
+    [session?.username]
+  );
+
   /**
    * Retrieve session from storage
    */
@@ -198,11 +199,6 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       autoConnect: false,
     });
 
-    socket.onAny((event, ...args) => {
-      console.log("On Any");
-      console.log(event, args);
-    });
-
     socket.on("session", ({ userID, username }) => {
       console.log("Received session", { userID, username });
       if (userID && username) {
@@ -215,6 +211,35 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       setAllUsers(allUsers);
     });
 
+    socket.on("user connected", ({ userID, username, imgUrl }) => {
+      setAllUsers((prev) => {
+        if (prev.find((u) => u.userID === userID)) {
+          return prev;
+        }
+
+        return [
+          ...prev,
+          {
+            userID,
+            username,
+            connected: true,
+            imgUrl,
+          },
+        ];
+      });
+    });
+
+    socket.on("user disconnected", (userID) => {
+      setAllUsers((prev) => {
+        return prev.map((u) => {
+          if (u.userID === userID) {
+            return { ...u, connected: false };
+          }
+          return u;
+        });
+      });
+    });
+
     socket.on("private message", (message: UserMessageType) => {
       console.log("Received message", message);
       addStoreMessage(message);
@@ -225,6 +250,12 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       updateStoreMessage(message);
     });
 
+    socket.on("messages", (messages?: UserMessageType[]) => {
+      console.log("Received messages", messages);
+      setMessages(messages || []);
+      setLoadingPrivateMessages(false);
+    });
+
     socketRef.current = socket;
 
     return () => {
@@ -232,6 +263,8 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       socket?.removeAllListeners();
     };
   }, [handleChangeSession, addStoreMessage, updateStoreMessage]);
+
+  console.log("messagesWithDays", messagesWithDays);
 
   return (
     <SocketContext.Provider
@@ -247,12 +280,15 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
       <ChatContext.Provider
         value={{
           messages,
+          messagesWithDays,
+          connectPrivateChat,
           sendMessage,
           likeMessage,
           selectedUser,
           setSelectedUserID,
           users: otherUsers,
           findMessage,
+          loadingPrivateMessages,
         }}
       >
         {children}

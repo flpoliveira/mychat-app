@@ -1,5 +1,6 @@
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { ChatPlaceholder } from "@/components/chat/ChatPlaceholder";
 import { ImageFocus } from "@/components/chat/ImageFocus";
 import { Message } from "@/components/chat/Message";
 import { IconButton } from "@/components/IconButton";
@@ -8,7 +9,6 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useChat } from "@/context/chat";
 import { UserMessageType } from "@/context/chat.interface";
-import debounce from "@/helpers/debounce";
 import getMessageItemLayout from "@/helpers/getMessageItemLayout";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,22 +18,15 @@ import {
   useLocalSearchParams,
   useRouter,
 } from "expo-router";
-import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  SectionList,
   FlatList,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 
 export default function UserChat() {
@@ -44,8 +37,10 @@ export default function UserChat() {
     sendMessage,
     setSelectedUserID,
     selectedUser,
-    messages,
+    messagesWithDays,
     likeMessage,
+    connectPrivateChat,
+    loadingPrivateMessages,
   } = useChat();
 
   const backgroundColor = useThemeColor({}, "background");
@@ -54,7 +49,6 @@ export default function UserChat() {
   const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
-    console.log("Sending message", message, "to", userId);
     if (userId) {
       sendMessage({
         content: message,
@@ -79,7 +73,13 @@ export default function UserChat() {
         isScrolling.current = false;
       }
     },
-    [messages]
+    [messagesWithDays]
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      connectPrivateChat(userId as string);
+    }, [userId, connectPrivateChat])
   );
 
   return (
@@ -105,27 +105,30 @@ export default function UserChat() {
         keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
       >
         <ThemedView style={styles.chatContainer}>
-          {!!messages && messages.length !== 0 ? (
+          {!!messagesWithDays && messagesWithDays.length !== 0 ? (
             <FlatList<UserMessageType & { type?: "date" }>
-              data={messages}
-              initialScrollIndex={messages.length - 1}
-              keyExtractor={(item, index) => item.id || index.toString()}
-              renderItem={({ item }) =>
-                item?.type === "date" ? (
-                  <Label>
-                    <ThemedText type="smallSemiBold">{item.content}</ThemedText>
-                  </Label>
-                ) : (
-                  <Message
-                    message={item}
-                    isSelf={item.to === userId}
-                    onLike={() => likeMessage(item)}
-                    onImageFocus={() => {
-                      router.push(`/chat/image/${item.id}`);
-                    }}
-                  />
-                )
-              }
+              data={messagesWithDays}
+              keyExtractor={(item) => item.id || `date-${item.content}`}
+              renderItem={({ item }) => (
+                <View>
+                  {item?.type === "date" ? (
+                    <Label>
+                      <ThemedText type="smallSemiBold">
+                        {item.content}
+                      </ThemedText>
+                    </Label>
+                  ) : (
+                    <Message
+                      message={item}
+                      isSelf={item.to === userId}
+                      onLike={() => likeMessage(item)}
+                      onImageFocus={() => {
+                        router.push(`/chat/image/${item.id}`);
+                      }}
+                    />
+                  )}
+                </View>
+              )}
               onEndReachedThreshold={1}
               onScroll={(e) => {
                 if (isScrolling.current) {
@@ -175,6 +178,21 @@ export default function UserChat() {
               onSend={handleSendMessage}
             />
           </ThemedView>
+          {loadingPrivateMessages && (
+            <View
+              style={{
+                flexGrow: 1,
+                position: "absolute",
+                flex: 1,
+                width: "100%",
+                height: "100%",
+                backgroundColor,
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size="large" color="#F158FF" />
+            </View>
+          )}
         </ThemedView>
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -5,6 +5,7 @@ import {
   findMessagesForUser,
   findAllSessions,
   saveMessage,
+  findLastMessageForUser,
 } from "./db.js";
 import { v4 as uuidv4 } from "uuid";
 import { createServer } from "http";
@@ -66,33 +67,26 @@ io.on("connection", async (socket) => {
 
   // fetch existing users
   const users = [];
-  const messagesPerUser = new Map();
-  (await findMessagesForUser(socket.userID)).forEach((message) => {
-    const { from, to } = message;
-    const otherUser = socket.userID === from ? to : from;
-    if (messagesPerUser.has(otherUser)) {
-      messagesPerUser.get(otherUser).push(message);
-    } else {
-      messagesPerUser.set(otherUser, [message]);
-    }
-  });
-  (await findAllSessions()).forEach((session) => {
+  const allSessions = await findAllSessions();
+  for (const session of allSessions) {
+    const lastMessage = await findLastMessageForUser(session.userID);
     users.push({
       userID: session.userID,
       username: session.username,
       connected: session.connected,
       lastActive: session.lastActive,
-      messages: messagesPerUser.get(session.userID) || [],
+      imgUrl: session.imgUrl,
+      lastMessage,
     });
-  });
+  }
+  console.log("users", users);
   socket.emit("users", users);
 
   // notify existing users
   socket.broadcast.emit("user connected", {
     userID: socket.userID,
     username: socket.username,
-    connected: true,
-    messages: [],
+    imgUrl: socket.imgUrl,
   });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
@@ -123,6 +117,12 @@ io.on("connection", async (socket) => {
     }
   });
 
+  socket.on("private chat", async ({ to }) => {
+    console.log("chat connected", { from: socket.userID, to });
+    const messages = await findMessagesForUser(to);
+    socket.emit("messages", messages);
+  });
+
   // notify users upon disconnection
   socket.on("disconnect", async () => {
     const matchingSockets = await io.in(socket.userID).allSockets();
@@ -135,6 +135,7 @@ io.on("connection", async (socket) => {
       saveSession({
         userID: socket.userID,
         username: socket.username,
+        imgUrl: socket.imgUrl,
         connected: false,
         lastActive: new Date().toISOString(),
       });

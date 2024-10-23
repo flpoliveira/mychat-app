@@ -1,6 +1,7 @@
 export type SessionType = {
   username: string;
   userID: string;
+  imgUrl?: string;
 };
 
 export type UserMessageType = {
@@ -19,5 +20,5 @@ export type UserType = {
   connected: boolean;
   lastActive?: string;
   imgUrl?: string;
-  messages?: Array<UserMessageType>;
+  lastMessage?: UserMessageType;
 };

@@ -7,21 +7,19 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useMemo, useState } from "react";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useChat, useSocket } from "@/context/chat";
 import { ChatConnect } from "@/components/ChatConnect";
-import { useMemo, useState } from "react";
-import { TapGestureHandler } from "react-native-gesture-handler";
-import { DoubleTapLike } from "@/components/DoubleTapLike";
 import { Link } from "expo-router";
 import clearSession from "@/helpers/clearSession";
+import { SearchInput } from "@/components/chat/ListSearch";
+import { Logo } from "@/components/Logo";
+import { List } from "@/components/chat/List";
 
 export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, "background");
@@ -29,53 +27,79 @@ export default function HomeScreen() {
   const { session } = useSocket();
   const { users } = useChat();
 
+  const [search, setSearch] = useState("");
+
+  const sortedUsers = useMemo(() => {
+    return users.sort((a, b) => {
+      if (a.connected && !b.connected) {
+        return -1;
+      }
+
+      if (!a.connected && b.connected) {
+        return 1;
+      }
+
+      if (a.lastMessage && !b.lastMessage) {
+        return -1;
+      }
+
+      if (!a.lastMessage && b.lastMessage) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }, [users]);
+
+  const usersFiltered = useMemo(() => {
+    if (!search) {
+      return sortedUsers;
+    }
+
+    return sortedUsers.filter((user) =>
+      user.username.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [sortedUsers, search]);
+
   return (
     <SafeAreaView
       style={{
         backgroundColor,
         flex: 1,
+        padding: 16,
       }}
     >
       {!!session ? (
         <ThemedView style={{ flex: 1 }}>
-          {users.length > 0 && (
-            <FlatList
-              data={users}
-              keyExtractor={(item) => item.userID}
-              renderItem={({ item }) => (
-                <Link href={`/chat/${item.userID}`}>
-                  <ThemedText>{item.username}</ThemedText>
-                </Link>
-              )}
-            />
+          <Logo style={{ width: 100, height: 50 }} />
+          <SearchInput onSearch={(e) => setSearch(e)} />
+          {usersFiltered.length > 0 ? (
+            <List users={usersFiltered} />
+          ) : (
+            <View style={styles.emptyList}>
+              <ThemedText>No users found</ThemedText>
+            </View>
           )}
-
-          <TouchableOpacity onPress={() => clearSession()}>
-            <ThemedText>Disconnect</ThemedText>
-          </TouchableOpacity>
         </ThemedView>
       ) : (
         <ChatConnect />
       )}
+      {/* <TouchableOpacity
+        onPress={() => {
+          clearSession();
+        }}
+      >
+        <ThemedText>Clear session</ThemedText>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  emptyList: {
+    flex: 1,
+    flexGrow: 1,
+    justifyContent: "center",
     alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
   },
 });
