@@ -21,7 +21,7 @@ import uuid from "react-native-uuid";
 import { PlaceholderImage } from "./PlaceholderImage";
 import { Logo } from "./Logo";
 
-function ChatConnect() {
+function SessionConnect() {
   const { socket, connect } = useSocket();
 
   const backgroundColor = useThemeColor({}, "background");
@@ -64,16 +64,7 @@ function ChatConnect() {
   if (step === 1) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor }}>
-        <ThemedView
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-            gap: 20,
-            padding: 20,
-          }}
-        >
+        <ThemedView style={styles.avatarContainer}>
           <ThemedText type="title">Welcome {username}</ThemedText>
           <PlaceholderImage
             source={{ uri: randomAvatarUrl }}
@@ -87,16 +78,7 @@ function ChatConnect() {
             disabled={loading}
             style={{ width: "80%" }}
           >
-            <PrimaryBackground
-              style={{
-                borderRadius: 8,
-                padding: 8,
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <PrimaryBackground style={styles.button}>
               <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
                 Let's chat
               </ThemedText>
@@ -115,26 +97,8 @@ function ChatConnect() {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
         >
-          <ThemedView
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flex: 1,
-              gap: 20,
-              width: "100%",
-              paddingHorizontal: 20,
-            }}
-          >
-            <ThemedView
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flex: 1,
-                gap: 10,
-              }}
-            >
+          <ThemedView style={styles.usernameContainer}>
+            <ThemedView style={styles.logoContainer}>
               <Logo style={{ width: 200, height: 100 }} />
             </ThemedView>
             <ThemedInput
@@ -148,16 +112,7 @@ function ChatConnect() {
               disabled={loading}
               style={{ width: "80%" }}
             >
-              <PrimaryBackground
-                style={{
-                  borderRadius: 8,
-                  padding: 8,
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <PrimaryBackground style={styles.button}>
                 <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
                   Connect
                 </ThemedText>
@@ -175,6 +130,37 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  avatarContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    gap: 20,
+    padding: 20,
+  },
+  button: {
+    borderRadius: 8,
+    padding: 8,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  usernameContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 1,
+    gap: 20,
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  logoContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
 });
 
-export { ChatConnect };
+export { SessionConnect };

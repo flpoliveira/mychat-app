@@ -59,6 +59,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "73748d42-d7ee-4f1d-9988-b378ac78ff47"
+      }
+    },
+    "owner": "flpoliveira"
   }
 }

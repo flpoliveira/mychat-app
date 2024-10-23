@@ -1,12 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useMemo, useState } from "react";
 
 import { ThemedText } from "@/components/ThemedText";
@@ -14,8 +6,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useChat, useSocket } from "@/context/chat";
-import { ChatConnect } from "@/components/ChatConnect";
-import { Link } from "expo-router";
+import { SessionConnect } from "@/components/SessionConnect";
 import clearSession from "@/helpers/clearSession";
 import { SearchInput } from "@/components/chat/ListSearch";
 import { Logo } from "@/components/Logo";
@@ -82,7 +73,7 @@ export default function HomeScreen() {
           )}
         </ThemedView>
       ) : (
-        <ChatConnect />
+        <SessionConnect />
       )}
       {/* <TouchableOpacity
         onPress={() => {
