@@ -38,6 +38,9 @@ cd app && npm run start
 
 ## Architecture
 
+![image](https://github.com/user-attachments/assets/c880ea0f-2e34-4565-a651-ebad5b4025a1)
+
+
 ### Database
 
 For this project, we are using LowDB—a JSON-based database for mockup projects. It is responsible for retrieving and saving sessions and messages. In a real-world scenario, you could replace LowDB with a relational database like PostgreSQL by re-implementing the module.
