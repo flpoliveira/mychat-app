@@ -40,83 +40,15 @@
       "username": "Ethan",
       "imgUrl": "https://api.multiavatar.com/8487ec77-a426-4c21-9cec-0b0ce01bd38f.png",
       "connected": true,
-      "lastActive": "2024-10-23T14:05:13.300Z"
+      "lastActive": "2024-10-23T14:12:26.384Z"
     },
     {
       "userID": "9f8ab70d-20b3-4bb0-8761-317281b567b3",
       "username": "testtt",
       "imgUrl": "https://api.multiavatar.com/cf1b1a6e-e643-48f8-9179-00535408d96f.png",
-      "connected": true,
-      "lastActive": "2024-10-23T14:05:19.677Z"
+      "connected": false,
+      "lastActive": "2024-10-23T14:07:44.779Z"
     }
   ],
-  "messages": [
-    {
-      "id": "ed1bd428-4c94-4e1a-a004-e7664117943b",
-      "timestamp": "2024-10-23T13:20:05.908Z",
-      "content": "Hello man.",
-      "from": "18065fe8-a4ae-45cd-a9da-4102501aa7d2",
-      "liked": false,
-      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
-    },
-    {
-      "id": "9438ecdd-44b1-4d22-84aa-b117a4d19f81",
-      "timestamp": "2024-10-23T13:23:36.230Z",
-      "content": "Hey man!",
-      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "liked": false,
-      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
-    },
-    {
-      "id": "3a4b3b01-df65-45bd-8d6f-0706ee4d09d4",
-      "timestamp": "2024-10-23T13:23:45.931Z",
-      "content": "Hey Ethan.",
-      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "liked": false,
-      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92"
-    },
-    {
-      "id": "c20c4493-49ef-4d1e-badc-eca94856cc74",
-      "timestamp": "2024-10-23T13:24:00.771Z",
-      "content": "Look at this!",
-      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "liked": true,
-      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729689840/tbesxz4zmr2oxpr1zgji.jpg"
-    },
-    {
-      "id": "32e06f3f-b262-4028-bfc4-fea40d4204b6",
-      "timestamp": "2024-10-23T13:24:17.703Z",
-      "content": "Awesome dude, great picture.",
-      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "liked": false,
-      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92"
-    },
-    {
-      "id": "9aed75ae-aef5-4dfc-975f-a76f5ec56618",
-      "timestamp": "2024-10-23T13:24:23.449Z",
-      "content": "Thank you",
-      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "liked": false,
-      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
-    },
-    {
-      "id": "a99496bc-9024-4c7b-a9e3-536d56033a11",
-      "timestamp": "2024-10-23T13:59:36.463Z",
-      "content": "",
-      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "liked": false,
-      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729691976/czz7fsx8da7bslk6c07o.jpg"
-    },
-    {
-      "id": "81a0ead6-e13c-4121-b8a7-73e157fdaca8",
-      "timestamp": "2024-10-23T14:00:36.368Z",
-      "content": "testtt",
-      "from": "9f8ab70d-20b3-4bb0-8761-317281b567b3",
-      "liked": true,
-      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729692036/ktgqp3unjdvwjmod7tga.jpg"
-    }
-  ]
+  "messages": []
 }
