@@ -18,6 +18,11 @@ To run this project locally, you need to run the API, WebSocket server, and the 
 
 Ensure you have the latest version of NodeJS installed on your machine.
 
+### Installing Dependencies
+```bash
+npm i
+```
+
 ### Running the WebSocket Server
 
 ```bash
