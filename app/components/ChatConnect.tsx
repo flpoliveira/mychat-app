@@ -11,11 +11,14 @@ import {
   Image,
   ActivityIndicator,
   StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedInput } from "./ThemedInput";
 import { PrimaryBackground } from "./PrimaryBackground";
 import uuid from "react-native-uuid";
+import { PlaceholderImage } from "./PlaceholderImage";
 
 function ChatConnect() {
   const { socket, connect } = useSocket();
@@ -71,13 +74,13 @@ function ChatConnect() {
           }}
         >
           <ThemedText type="title">Welcome {username}</ThemedText>
-          <Image
+          <PlaceholderImage
             source={{ uri: randomAvatarUrl }}
-            style={{ width: 100, height: 100, borderRadius: 50 }}
+            width={100}
+            height={100}
+            style={{ borderRadius: 50 }}
           />
-          <ThemedText type="default">
-            This is your avatar, you can change it later.
-          </ThemedText>
+          <ThemedText type="default">This is your avatar.</ThemedText>
           <TouchableOpacity
             onPress={confirm}
             disabled={loading}
@@ -105,65 +108,67 @@ function ChatConnect() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
-      >
-        <ThemedView
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flex: 1,
-            gap: 20,
-            width: "100%",
-            paddingHorizontal: 20,
-          }}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
         >
           <ThemedView
             style={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-between",
               alignItems: "center",
               flex: 1,
-              gap: 10,
+              gap: 20,
+              width: "100%",
+              paddingHorizontal: 20,
             }}
           >
-            <ThemedText type="title">Welcome to</ThemedText>
-            <Image
-              source={require("../assets/images/logo.png")}
-              resizeMode="contain"
-            />
-          </ThemedView>
-          <ThemedInput
-            placeholder="Enter your username"
-            value={username}
-            onChangeText={setUsername}
-            style={{ width: "80%" }}
-          />
-          <TouchableOpacity
-            onPress={confirm}
-            disabled={loading}
-            style={{ width: "80%" }}
-          >
-            <PrimaryBackground
+            <ThemedView
               style={{
-                borderRadius: 8,
-                padding: 8,
-                width: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flex: 1,
+                gap: 10,
               }}
             >
-              <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
-                Connect
-              </ThemedText>
-            </PrimaryBackground>
-          </TouchableOpacity>
-        </ThemedView>
-      </KeyboardAvoidingView>
+              <Image
+                source={require("../assets/images/logo.png")}
+                resizeMode="contain"
+                style={{ width: 200, height: 100 }}
+              />
+            </ThemedView>
+            <ThemedInput
+              placeholder="Enter your username"
+              value={username}
+              onChangeText={setUsername}
+              style={{ width: "80%" }}
+            />
+            <TouchableOpacity
+              onPress={confirm}
+              disabled={loading}
+              style={{ width: "80%" }}
+            >
+              <PrimaryBackground
+                style={{
+                  borderRadius: 8,
+                  padding: 8,
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
+                  Connect
+                </ThemedText>
+              </PrimaryBackground>
+            </TouchableOpacity>
+          </ThemedView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

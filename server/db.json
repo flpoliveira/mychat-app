@@ -33,8 +33,32 @@
     {
       "userID": "19860c1b-8825-4398-9f80-9b0eb88e4b43",
       "username": "Joao",
+      "connected": false,
+      "lastActive": "2024-10-23T01:26:24.897Z"
+    },
+    {
+      "userID": "963a88a0-9459-4715-a3ab-0b734d1b0ef9",
+      "username": "Dsadsad",
       "connected": true,
-      "lastActive": "2024-10-23T01:25:02.342Z"
+      "lastActive": "2024-10-23T01:44:25.103Z"
+    },
+    {
+      "userID": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "username": "Test",
+      "connected": false,
+      "lastActive": "2024-10-23T01:41:28.471Z"
+    },
+    {
+      "userID": "b09f2257-3c00-47a6-b018-5b78c5da1dd9",
+      "username": "Test",
+      "connected": false,
+      "lastActive": "2024-10-23T01:44:24.020Z"
+    },
+    {
+      "userID": "59d1da39-1653-47a0-9b1a-dce87e64e60b",
+      "username": "Test",
+      "connected": false,
+      "lastActive": "2024-10-23T01:44:39.754Z"
     }
   ],
   "messages": [
@@ -999,6 +1023,119 @@
       "liked": false,
       "to": "b971076e-0a13-4af3-be21-e8f8f0d066df",
       "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729643612/cviir4qsc4lfvo4sdxwb.jpg"
+    },
+    {
+      "id": "c8f49333-3cb2-4158-9091-9e46dcd87ae7",
+      "timestamp": "2024-10-23T01:38:11.761Z",
+      "content": "Kkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "0807782d-bb59-4bfa-9e3f-70c1d22507e2",
+      "timestamp": "2024-10-23T01:38:15.644Z",
+      "content": "Lll",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "bb32a844-c645-4d5f-881d-42dd77db76f2",
+      "timestamp": "2024-10-23T01:38:17.676Z",
+      "content": "Jkjj",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "b972eaa0-4ef5-459d-bc4c-805056f93d3c",
+      "timestamp": "2024-10-23T01:38:46.510Z",
+      "content": "",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729647525/ogdjfsmlhrbcoy8rquom.jpg"
+    },
+    {
+      "id": "aa1d1a3e-816a-43b0-b52d-08243d954f4c",
+      "timestamp": "2024-10-23T01:39:59.810Z",
+      "content": "Okkkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "19860c1b-8825-4398-9f80-9b0eb88e4b43"
+    },
+    {
+      "id": "c97cea36-136a-4866-b7a2-35b32ed49458",
+      "timestamp": "2024-10-23T01:40:52.424Z",
+      "content": "Kkkkkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "7a27b650-05c0-4ef8-bc60-95e1960842a3"
+    },
+    {
+      "id": "a70f0bd2-60ed-41ba-9df2-223b66baf52b",
+      "timestamp": "2024-10-23T01:40:53.787Z",
+      "content": "Lkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "7a27b650-05c0-4ef8-bc60-95e1960842a3"
+    },
+    {
+      "id": "cb0323d3-4efd-46d1-ad9d-aa8c5ac865fb",
+      "timestamp": "2024-10-23T01:40:56.824Z",
+      "content": "Jjjj",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "7a27b650-05c0-4ef8-bc60-95e1960842a3"
+    },
+    {
+      "id": "cf24e029-2e21-4e2f-b65e-a7a3fef238f4",
+      "timestamp": "2024-10-23T01:41:00.288Z",
+      "content": "Eeeeeee",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "7a27b650-05c0-4ef8-bc60-95e1960842a3"
+    },
+    {
+      "id": "ec6c925f-1b70-4df4-8820-c0a4739a87e1",
+      "timestamp": "2024-10-23T01:41:03.038Z",
+      "content": "Uuuu",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "7a27b650-05c0-4ef8-bc60-95e1960842a3"
+    },
+    {
+      "id": "6f1fee5a-5932-48c1-9b92-979884f80c45",
+      "timestamp": "2024-10-23T01:41:07.881Z",
+      "content": "Vvvvvv",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "09e71ee0-4997-431d-96ca-0466907ea885",
+      "timestamp": "2024-10-23T01:41:10.139Z",
+      "content": "Jjjjjj",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "7aefa397-bea9-43ba-9577-53bd785a4458",
+      "timestamp": "2024-10-23T01:41:11.428Z",
+      "content": "Kkkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
+    },
+    {
+      "id": "d5a5fbb0-60e8-40f2-8747-998c38099a0c",
+      "timestamp": "2024-10-23T01:41:12.690Z",
+      "content": "Lkk",
+      "from": "fbd27baf-15ec-463e-bd61-9c7c84dcf531",
+      "liked": false,
+      "to": "963a88a0-9459-4715-a3ab-0b734d1b0ef9"
     }
   ]
 }

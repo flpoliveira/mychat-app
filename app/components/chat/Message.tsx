@@ -5,6 +5,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { getMessageTime } from "@/helpers/getMessageTime";
 import { DoubleTapLike } from "../DoubleTapLike";
 import { LikeIcon } from "./LikeIcon";
+import { PlaceholderImage } from "../PlaceholderImage";
 
 function Message({
   message,
@@ -54,7 +55,10 @@ function Message({
           {hasImage && (
             <View style={styles.imageContainer}>
               <View style={styles.imageContent}>
-                <Image source={{ uri: message.imgUrl }} style={styles.image} />
+                <PlaceholderImage
+                  source={{ uri: message.imgUrl }}
+                  style={styles.image}
+                />
               </View>
             </View>
           )}

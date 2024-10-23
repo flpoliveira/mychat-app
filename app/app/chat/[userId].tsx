@@ -105,7 +105,7 @@ export default function UserChat() {
         keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
       >
         <ThemedView style={styles.chatContainer}>
-          {!!messages && messages.length !== 0 && (
+          {!!messages && messages.length !== 0 ? (
             <FlatList<UserMessageType & { type?: "date" }>
               data={messages}
               initialScrollIndex={messages.length - 1}
@@ -156,6 +156,8 @@ export default function UserChat() {
               style={{ paddingVertical: 8, flexGrow: 1 }}
               ref={flatListRef}
             />
+          ) : (
+            <View style={{ flexGrow: 1 }} />
           )}
 
           {!canScroll && (
