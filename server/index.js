@@ -69,7 +69,10 @@ io.on("connection", async (socket) => {
   const users = [];
   const allSessions = await findAllSessions();
   for (const session of allSessions) {
-    const lastMessage = await findLastMessageForUser(session.userID);
+    const lastMessage = await findLastMessageForUser(
+      session.userID,
+      socket.userID
+    );
     users.push({
       userID: session.userID,
       username: session.username,
@@ -87,6 +90,7 @@ io.on("connection", async (socket) => {
     userID: socket.userID,
     username: socket.username,
     imgUrl: socket.imgUrl,
+    connected: true,
   });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
@@ -119,7 +123,7 @@ io.on("connection", async (socket) => {
 
   socket.on("private chat", async ({ to }) => {
     console.log("chat connected", { from: socket.userID, to });
-    const messages = await findMessagesForUser(to);
+    const messages = await findMessagesForUser(to, socket.userID);
     socket.emit("messages", messages);
   });
 

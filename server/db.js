@@ -58,17 +58,21 @@ export const saveSession = async (session) => {
   await db.write();
 };
 
-export const findLastMessageForUser = async (userID) => {
+export const findLastMessageForUser = async (userA, userB) => {
   await db.read();
   return db.data.messages.find(
-    (message) => message.from === userID || message.to === userID
+    (message) =>
+      (message.from === userA && message.to === userB) ||
+      (message.to === userA && message.from === userB)
   );
 };
 
-export const findMessagesForUser = async (userID) => {
+export const findMessagesForUser = async (userA, userB) => {
   await db.read();
   return db.data.messages.filter(
-    (message) => message.from === userID || message.to === userID
+    (message) =>
+      (message.from === userA && message.to === userB) ||
+      (message.to === userA && message.from === userB)
   );
 };
 

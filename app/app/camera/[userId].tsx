@@ -27,7 +27,7 @@ function CameraScreen() {
   const [flash, setFlash] = useState<"on" | "off">("off");
   const cameraRef = useRef<CameraView>(null);
 
-  const { userId } = useLocalSearchParams();
+  const { userID } = useLocalSearchParams();
   const { sendMessage, selectedUser } = useChat();
 
   const [image, setImage] = useState<{
@@ -85,7 +85,7 @@ function CameraScreen() {
   };
 
   const onConfirm = async () => {
-    if (!image?.base64 || !userId) {
+    if (!image?.base64 || !userID) {
       return;
     }
 

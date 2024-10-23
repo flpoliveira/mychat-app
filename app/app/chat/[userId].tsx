@@ -30,7 +30,7 @@ import {
 } from "react-native";
 
 export default function UserChat() {
-  const { userId } = useLocalSearchParams();
+  const { userID } = useLocalSearchParams();
   const router = useRouter();
 
   const {
@@ -49,7 +49,7 @@ export default function UserChat() {
   const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
-    if (userId) {
+    if (userID) {
       sendMessage({
         content: message,
       });
@@ -58,7 +58,7 @@ export default function UserChat() {
   };
 
   useEffect(() => {
-    setSelectedUserID(userId as string);
+    setSelectedUserID(userID as string);
   }, [setSelectedUserID]);
 
   const isScrolling = useRef(false);
@@ -78,8 +78,8 @@ export default function UserChat() {
 
   useFocusEffect(
     useCallback(() => {
-      connectPrivateChat(userId as string);
-    }, [userId, connectPrivateChat])
+      connectPrivateChat(userID as string);
+    }, [userID, connectPrivateChat])
   );
 
   return (
@@ -120,7 +120,7 @@ export default function UserChat() {
                   ) : (
                     <Message
                       message={item}
-                      isSelf={item.to === userId}
+                      isSelf={item.to === userID}
                       onLike={() => likeMessage(item)}
                       onImageFocus={() => {
                         router.push(`/chat/image/${item.id}`);
@@ -174,7 +174,7 @@ export default function UserChat() {
             <ChatInput
               value={message}
               onChange={(e) => setMessage(e)}
-              userId={userId as string}
+              userID={userID as string}
               onSend={handleSendMessage}
             />
           </ThemedView>

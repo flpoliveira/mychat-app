@@ -5,11 +5,11 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView, StyleSheet, Image, View, Text } from "react-native";
 
 export default function FocusedImage() {
-  const { messageId } = useLocalSearchParams();
+  const { messageID } = useLocalSearchParams();
   const { selectedUser, findMessage } = useChat();
   const backgroundColor = useThemeColor({}, "background");
 
-  const message = findMessage(messageId as string);
+  const message = findMessage(messageID as string);
   const from =
     message?.from === selectedUser?.userID ? selectedUser?.username : "You";
   const imgUrl = message?.imgUrl || "";

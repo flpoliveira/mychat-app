@@ -9,12 +9,12 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 function ChatInput({
   value,
   onChange,
-  userId,
+  userID,
   onSend,
 }: {
   value: string;
   onChange: (value: string) => void;
-  userId: string;
+  userID: string;
   onSend: () => void;
 }) {
   const router = useRouter();
@@ -33,7 +33,7 @@ function ChatInput({
       {showCamera ? (
         <TouchableOpacity
           onPress={() => {
-            router.push(`/camera/${userId}`);
+            router.push(`/camera/${userID}`);
           }}
           style={styles.button}
         >

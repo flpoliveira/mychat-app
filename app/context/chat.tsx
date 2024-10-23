@@ -191,7 +191,12 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     socket.on("user connected", ({ userID, username, imgUrl }) => {
       setAllUsers((prev) => {
         if (prev.find((u) => u.userID === userID)) {
-          return prev;
+          return prev.map((u) => {
+            if (u.userID === userID) {
+              return { ...u, connected: true, imgUrl };
+            }
+            return u;
+          });
         }
 
         return [

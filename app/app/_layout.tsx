@@ -39,7 +39,7 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
-              name="camera/[userId]"
+              name="camera/[userID]"
               options={{ headerShown: false }}
             />
             <Stack.Screen name="+not-found" />
