@@ -1,4 +1,3 @@
-import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ThemedText } from "@/components/ThemedText";
 import { useChat } from "@/context/chat";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -26,11 +25,18 @@ export default function FocusedImage() {
           headerStyle: {
             backgroundColor,
           },
-          // header: () => <ChatHeader user={selectedUser} />,
+          headerTitleStyle: {
+            fontSize: 16,
+            fontWeight: "400",
+          },
         }}
       />
 
-      <Image source={{ uri: imgUrl }} style={styles.image} resizeMode="fill" />
+      <Image
+        source={{ uri: imgUrl }}
+        style={styles.image}
+        resizeMode={"contain"}
+      />
       <View style={styles.container}>
         <View style={styles.footer}>
           {caption && <Text style={styles.captionText}>{caption}</Text>}

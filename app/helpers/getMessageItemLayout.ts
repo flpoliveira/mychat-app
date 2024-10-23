@@ -1,45 +1,43 @@
-import { UserMessageType } from "@/context/chat.interface";
-import { SectionListData } from "react-native";
+import { Dimensions } from "react-native";
 
 function countNumberOfLines(text: string): number {
   const splited = text.split("\n");
+  const maxCharactersPerLine = Math.max(
+    Math.ceil(Dimensions.get("screen").width / 16),
+    1
+  );
   return (
     splited.length +
-    splited.reduce((acc, line) => acc + Math.ceil(line.length / 40), 0)
+    splited.reduce(
+      (acc, line) => acc + Math.ceil(line.length / maxCharactersPerLine),
+      0
+    )
   );
 }
 
 function getMessageItemLayout(
-  item:
-    | SectionListData<
-        UserMessageType,
-        {
-          title: string;
-        }
-      >[]
-    | null,
-  rowIndex: number
+  data?: ArrayLike<{
+    content: string;
+    imgUrl?: string;
+  }> | null,
+  rowIndex?: number
 ): {
   length: number;
   offset: number;
   index: number;
 } {
-  if (!item || !item.length) {
+  if (!data || !data.length) {
     return {
       length: 0,
       offset: 0,
-      index: rowIndex,
+      index: rowIndex || 0,
     };
   }
+  const index = rowIndex || 0;
 
-  const allMessages = item.reduce(
-    (acc, section) => [...acc, { content: section.title }, ...section.data],
-    [] as Partial<UserMessageType>[]
-  );
-
-  let offset = 0;
-  for (let i = 0; i < rowIndex && i < allMessages.length - 1; i++) {
-    const message = allMessages[i];
+  let offset = 30;
+  for (let i = 0; i < index && i < data.length - 1; i++) {
+    const message = data[i];
     const numberOfLines = countNumberOfLines(message?.content || "");
     offset += numberOfLines * 24 + 40;
     if (message.imgUrl) {
@@ -48,14 +46,14 @@ function getMessageItemLayout(
   }
 
   const length =
-    countNumberOfLines(allMessages?.[rowIndex]?.content || "") * 24 +
+    countNumberOfLines(data?.[index]?.content || "") * 24 +
     40 +
-    (allMessages?.[rowIndex]?.imgUrl ? 200 : 0);
+    (data?.[index]?.imgUrl ? 200 : 0);
 
   return {
     length,
     offset,
-    index: rowIndex,
+    index,
   };
 }
 

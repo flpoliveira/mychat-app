@@ -1,29 +1,32 @@
 import { UserMessageType } from "@/context/chat.interface";
 import { getDayLabel } from "./getDayLabel";
 
-function buildMessagesPerDay(messages: UserMessageType[]): Array<{
-  title: string;
-  data: UserMessageType[];
-}> {
-  const messagesPerDay = {} as Record<
-    string,
-    {
-      title: string;
-      data: UserMessageType[];
-    }
-  >;
+function buildMessagesPerDay(
+  messages: UserMessageType[]
+): Array<{ type?: "date" } & UserMessageType> {
+  const messagesPerDay = {} as Record<string, UserMessageType[]>;
 
   messages.forEach((message) => {
     const date = new Date(message.timestamp).toDateString();
 
     if (!messagesPerDay[date]) {
-      messagesPerDay[date] = { title: getDayLabel(date), data: [] };
+      messagesPerDay[date] = [];
     }
 
-    messagesPerDay[date].data.push(message);
+    messagesPerDay[date].push(message);
   });
 
-  return Object.keys(messagesPerDay).map((key) => messagesPerDay[key]);
+  const days = Object.keys(messagesPerDay).sort((a, b) => {
+    return new Date(b).getTime() - new Date(a).getTime();
+  });
+
+  return days.reduce((acc, key) => {
+    return [
+      ...acc,
+      { type: "date", content: getDayLabel(key) },
+      ...messagesPerDay[key],
+    ] as Array<{ type: "date" } & UserMessageType>;
+  }, [] as Array<{ type: "date" } & UserMessageType>);
 }
 
 export { buildMessagesPerDay };

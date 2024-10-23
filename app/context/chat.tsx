@@ -25,10 +25,11 @@ const SocketContext = createContext<{
 } | null>(null);
 
 const ChatContext = createContext<{
-  messages: Array<{
-    title: string;
-    data: UserMessageType[];
-  }>;
+  messages: Array<
+    {
+      type?: "date";
+    } & UserMessageType
+  >;
   sendMessage: (message: { content: string; imgUrl?: string }) => void;
   likeMessage: (message: UserMessageType) => void;
   selectedUser: UserType | null;
