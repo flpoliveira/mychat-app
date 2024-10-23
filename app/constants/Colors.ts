@@ -20,6 +20,7 @@ export const Colors = {
     messageBackground: "#F5F5FA",
     selfMessageBackground: "#E9F2FF",
     labelBackground: "#E9F2FF",
+    border: "rgba(0, 0, 0, 0.1)",
   },
   dark: {
     text: "#ECEDEE",
@@ -34,5 +35,6 @@ export const Colors = {
     messageBackground: "#0A0A05",
     selfMessageBackground: "#160D00",
     labelBackground: "#160D00",
+    border: "rgba(255, 255, 255, 0.1)",
   },
 };

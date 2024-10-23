@@ -37,6 +37,7 @@ export default function FocusedImage() {
         style={styles.image}
         resizeMode={"contain"}
       />
+
       <View style={styles.container}>
         <View style={styles.footer}>
           {caption && <Text style={styles.captionText}>{caption}</Text>}

@@ -33,7 +33,7 @@ function ChatInput({
       {showCamera ? (
         <TouchableOpacity
           onPress={() => {
-            router.push(`/camera/${userID}`);
+            router.push(`/chat/camera/${userID}`);
           }}
           style={styles.button}
         >

@@ -148,6 +148,7 @@ function CameraScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
+      <Stack.Screen options={{ headerShown: false }} />
       {image ? (
         <ImagePreview
           image={image}
@@ -279,4 +280,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CameraScreen;
+function CameraWrapper() {
+  return (
+    <ThemedView style={{ flex: 1, width: "100%" }}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <CameraScreen />
+    </ThemedView>
+  );
+}
+
+export default CameraWrapper;

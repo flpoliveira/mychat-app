@@ -32,15 +32,22 @@
       "userID": "ab341d0a-234f-4121-a007-e2b60d5a8832",
       "username": "Test",
       "imgUrl": "https://api.multiavatar.com/a40df839-9b2b-4c89-ace1-5e6763fbaca0.png",
-      "connected": true,
-      "lastActive": "2024-10-23T13:22:46.742Z"
+      "connected": false,
+      "lastActive": "2024-10-23T13:59:46.880Z"
     },
     {
       "userID": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
       "username": "Ethan",
       "imgUrl": "https://api.multiavatar.com/8487ec77-a426-4c21-9cec-0b0ce01bd38f.png",
       "connected": true,
-      "lastActive": "2024-10-23T13:23:28.051Z"
+      "lastActive": "2024-10-23T14:05:13.300Z"
+    },
+    {
+      "userID": "9f8ab70d-20b3-4bb0-8761-317281b567b3",
+      "username": "testtt",
+      "imgUrl": "https://api.multiavatar.com/cf1b1a6e-e643-48f8-9179-00535408d96f.png",
+      "connected": true,
+      "lastActive": "2024-10-23T14:05:19.677Z"
     }
   ],
   "messages": [
@@ -92,6 +99,24 @@
       "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
       "liked": false,
       "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
+    },
+    {
+      "id": "a99496bc-9024-4c7b-a9e3-536d56033a11",
+      "timestamp": "2024-10-23T13:59:36.463Z",
+      "content": "",
+      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
+      "liked": false,
+      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729691976/czz7fsx8da7bslk6c07o.jpg"
+    },
+    {
+      "id": "81a0ead6-e13c-4121-b8a7-73e157fdaca8",
+      "timestamp": "2024-10-23T14:00:36.368Z",
+      "content": "testtt",
+      "from": "9f8ab70d-20b3-4bb0-8761-317281b567b3",
+      "liked": true,
+      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729692036/ktgqp3unjdvwjmod7tga.jpg"
     }
   ]
 }

@@ -7,6 +7,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 function Contact({ user, isFromMe }: { user: UserType; isFromMe: boolean }) {
   const color = useThemeColor({}, "secondaryText");
+  const borderColor = useThemeColor({}, "border");
   const lastMessage = user?.lastMessage;
   const status = user?.connected ? "online" : "offline";
 
@@ -28,7 +29,14 @@ function Contact({ user, isFromMe }: { user: UserType; isFromMe: boolean }) {
           style={{ borderRadius: 50 }}
         />
       </ThemedView>
-      <ThemedView style={styles.rightContainer}>
+      <ThemedView
+        style={[
+          styles.rightContainer,
+          {
+            borderBottomColor: borderColor,
+          },
+        ]}
+      >
         <ThemedView style={styles.firstRow}>
           <ThemedText type="defaultSemiBold">{user.username}</ThemedText>
 
@@ -63,7 +71,6 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     borderBottomWidth: 1,
-    borderColor: "rgba(0,0,0,0.1)",
     flexGrow: 1,
     display: "flex",
     flexDirection: "column",

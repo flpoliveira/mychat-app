@@ -38,10 +38,6 @@ export default function RootLayout() {
         <SocketProvider>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="camera/[userID]"
-              options={{ headerShown: false }}
-            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </SocketProvider>
