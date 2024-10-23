@@ -1,7 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
-  MutableRefObject,
   useCallback,
   useContext,
   useEffect,
@@ -10,42 +8,21 @@ import {
   useState,
 } from "react";
 import { io, Socket } from "socket.io-client";
-import { SessionType, UserMessageType, UserType } from "./chat.interface";
+import {
+  SessionType,
+  UserMessageType,
+  UserType,
+  SocketContextType,
+  ChatContextType,
+} from "./chat.interface";
 import getSession from "@/helpers/getSession";
 import storeSession from "@/helpers/storeSession";
-import { buildMessagesWithDays } from "@/helpers/buildMessagesWithDays";
+import { buildMessagesWithDays } from "../helpers/buildMessagesWithDays";
+import { SOCKET_ENDPOINT } from "./chat.config";
 
-const SocketContext = createContext<{
-  socket: MutableRefObject<Socket | null>;
-  session: SessionType | null;
-  handleChangeSession: (value: SessionType) => void;
-  connect: (
-    username: string,
-    randomAvatarUrl?: string,
-    userID?: string
-  ) => void;
-  allUsers: Array<UserType>;
-  updateStoreMessage: (message: Partial<UserMessageType>) => void;
-} | null>(null);
+const SocketContext = createContext<SocketContextType | null>(null);
 
-const ChatContext = createContext<{
-  messages: Array<UserMessageType>;
-  messagesWithDays: Array<
-    {
-      type?: "date";
-    } & UserMessageType
-  >;
-  connectPrivateChat: (to: string) => void;
-  sendMessage: (message: { content: string; imgUrl?: string }) => void;
-  likeMessage: (message: UserMessageType) => void;
-  selectedUser: UserType | null;
-  setSelectedUserID: (id: string) => void;
-  users: Array<UserType>;
-  findMessage: (id?: string) => UserMessageType | undefined;
-  loadingPrivateMessages?: boolean;
-} | null>(null);
-
-const socketEndpoint = "http://192.168.0.4:3000";
+const ChatContext = createContext<ChatContextType | null>(null);
 
 const SocketProvider = ({ children }: { children: React.ReactElement }) => {
   const [connection, setConnection] = useState(false);
@@ -194,7 +171,7 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
    * Handle socket events
    */
   useEffect(() => {
-    const socket = io(socketEndpoint, {
+    const socket = io(SOCKET_ENDPOINT, {
       transports: ["websocket"],
       autoConnect: false,
     });

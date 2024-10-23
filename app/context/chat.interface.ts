@@ -1,24 +1,56 @@
+import { MutableRefObject } from "react";
+import { Socket } from "socket.io-client";
+
 export type SessionType = {
-  username: string;
   userID: string;
-  imgUrl?: string;
+  username: string;
 };
 
 export type UserMessageType = {
   id?: string;
-  timestamp: string;
   content: string;
   from: string;
-  to: string;
-  liked?: boolean;
   imgUrl?: string;
+  liked?: boolean;
+  timestamp: string;
+  to: string;
 };
 
 export type UserType = {
+  connected: boolean;
+  imgUrl?: string;
+  lastActive?: string;
+  lastMessage?: UserMessageType;
   userID: string;
   username: string;
-  connected: boolean;
-  lastActive?: string;
-  imgUrl?: string;
-  lastMessage?: UserMessageType;
+};
+
+export type SocketContextType = {
+  connect: (
+    username: string,
+    randomAvatarUrl?: string,
+    userID?: string
+  ) => void;
+  handleChangeSession: (value: SessionType) => void;
+  updateStoreMessage: (message: Partial<UserMessageType>) => void;
+  allUsers: Array<UserType>;
+  session: SessionType | null;
+  socket: MutableRefObject<Socket | null>;
+};
+
+export type ChatContextType = {
+  connectPrivateChat: (to: string) => void;
+  findMessage: (id?: string) => UserMessageType | undefined;
+  likeMessage: (message: UserMessageType) => void;
+  sendMessage: (message: { content: string; imgUrl?: string }) => void;
+  setSelectedUserID: (id: string) => void;
+  loadingPrivateMessages?: boolean;
+  messages: Array<UserMessageType>;
+  messagesWithDays: Array<
+    {
+      type?: "date";
+    } & UserMessageType
+  >;
+  selectedUser: UserType | null;
+  users: Array<UserType>;
 };

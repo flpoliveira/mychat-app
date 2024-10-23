@@ -4,8 +4,8 @@
       "userID": "43039af7-2734-4d86-a052-89f636d65479",
       "username": "Alex",
       "imgUrl": "https://api.multiavatar.com/873a0710-aaf9-4e95-9b9d-878044c5aba7.png",
-      "connected": false,
-      "lastActive": "2024-10-23T11:37:22.074Z"
+      "connected": true,
+      "lastActive": "2024-10-23T12:08:04.804Z"
     },
     {
       "userID": "ae6e8d8c-621f-417e-9d94-c6143c1dddc5",
@@ -13,6 +13,13 @@
       "imgUrl": "https://api.multiavatar.com/6886a1f9-2850-43c4-bbd1-96d1b1642156.png",
       "connected": false,
       "lastActive": "2024-10-23T11:51:39.425Z"
+    },
+    {
+      "userID": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
+      "username": "John",
+      "imgUrl": "https://api.multiavatar.com/6fbdda38-f717-495e-b2d0-7cfa7a4a04ec.png",
+      "connected": true,
+      "lastActive": "2024-10-23T12:07:20.704Z"
     }
   ],
   "messages": [
@@ -297,6 +304,22 @@
       "liked": false,
       "to": "ae6e8d8c-621f-417e-9d94-c6143c1dddc5",
       "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729683429/rr2e49zn3dszveuolm4a.jpg"
+    },
+    {
+      "id": "3da6e26c-eaa4-4df3-b692-66b1f72f2f5b",
+      "timestamp": "2024-10-23T12:08:13.051Z",
+      "content": "Hey bro",
+      "from": "43039af7-2734-4d86-a052-89f636d65479",
+      "liked": false,
+      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5"
+    },
+    {
+      "id": "18023ee1-3575-4531-9668-c990a19ea999",
+      "timestamp": "2024-10-23T12:08:23.554Z",
+      "content": "Who am I?",
+      "from": "43039af7-2734-4d86-a052-89f636d65479",
+      "liked": false,
+      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5"
     }
   ]
 }

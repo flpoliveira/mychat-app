@@ -3,7 +3,7 @@ import { Dimensions, View, Text, Image, StyleSheet } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { getMessageTime } from "@/helpers/getMessageTime";
-import { DoubleTapLike } from "../DoubleTapLike";
+import { DoubleTapLike } from "./DoubleTapLike";
 import { LikeIcon } from "./LikeIcon";
 import { PlaceholderImage } from "../PlaceholderImage";
 
