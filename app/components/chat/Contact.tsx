@@ -3,7 +3,7 @@ import { ThemedText } from "../ThemedText";
 import { ThemedView } from "../ThemedView";
 import { PlaceholderImage } from "../PlaceholderImage";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 function Contact({ user, isFromMe }: { user: UserType; isFromMe: boolean }) {
   const color = useThemeColor({}, "secondaryText");
@@ -37,7 +37,15 @@ function Contact({ user, isFromMe }: { user: UserType; isFromMe: boolean }) {
           </ThemedText>
         </ThemedView>
 
-        <ThemedText numberOfLines={1} style={{ color, minHeight: 24 }}>
+        <ThemedText
+          numberOfLines={1}
+          style={{
+            color,
+            minHeight: 24,
+            maxWidth: "80%",
+            width: Dimensions.get("window").width - 100,
+          }}
+        >
           {messageContent}
         </ThemedText>
       </ThemedView>

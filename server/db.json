@@ -19,7 +19,7 @@
       "username": "John",
       "imgUrl": "https://api.multiavatar.com/6fbdda38-f717-495e-b2d0-7cfa7a4a04ec.png",
       "connected": true,
-      "lastActive": "2024-10-23T12:50:54.830Z"
+      "lastActive": "2024-10-23T13:13:32.568Z"
     },
     {
       "userID": "cfe44e94-700a-4098-bf78-826c0feb7f82",
@@ -32,44 +32,34 @@
       "userID": "d67f60c3-6199-4065-9060-5c1334c8cefa",
       "username": "Maria",
       "imgUrl": "https://api.multiavatar.com/e5b44196-96c6-4cd2-b369-c626d64cda30.png",
+      "connected": false,
+      "lastActive": "2024-10-23T12:54:32.523Z"
+    },
+    {
+      "userID": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "username": "Test",
+      "imgUrl": "https://api.multiavatar.com/a40df839-9b2b-4c89-ace1-5e6763fbaca0.png",
       "connected": true,
-      "lastActive": "2024-10-23T12:50:55.077Z"
+      "lastActive": "2024-10-23T13:13:33.963Z"
     }
   ],
   "messages": [
     {
-      "id": "3d39c04f-48b9-4d57-b1b6-a3a208f0032b",
-      "timestamp": "2024-10-23T12:33:19.204Z",
-      "content": "Hello John! ",
-      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
+      "id": "ee7245af-d982-46f1-83a2-37881ecfdc44",
+      "timestamp": "2024-10-23T13:01:24.169Z",
+      "content": "test",
+      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
       "liked": false,
       "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5"
     },
     {
-      "id": "2c5cc229-994b-44f4-8605-bcde2cceee38",
-      "timestamp": "2024-10-23T12:33:31.278Z",
-      "content": "Hey Maria, nice to see you in this chat!",
+      "id": "e6a95268-688c-47c5-9aee-201bcb49afbe",
+      "timestamp": "2024-10-23T13:03:08.418Z",
+      "content": "",
       "from": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
       "liked": true,
-      "to": "d67f60c3-6199-4065-9060-5c1334c8cefa"
-    },
-    {
-      "id": "0bef25dc-d4f0-4a6a-9e8a-2f0f5e964178",
-      "timestamp": "2024-10-23T12:33:52.637Z",
-      "content": "Check out this cool image! ",
-      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
-      "liked": true,
-      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729686832/lxpxkn5m7o8ttdz8hhi2.jpg"
-    },
-    {
-      "id": "2750e52f-f211-4221-b5e9-cfe7befd4519",
-      "timestamp": "2024-10-23T12:41:26.563Z",
-      "content": "",
-      "from": "d67f60c3-6199-4065-9060-5c1334c8cefa",
-      "liked": false,
-      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729687285/hbtbjwxyqwl0dres1aw5.jpg"
+      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729688587/vlg0znwyfz95xmezk8sh.jpg"
     }
   ]
 }

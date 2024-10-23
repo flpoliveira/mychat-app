@@ -22,7 +22,13 @@ function List({
           />
         </Link>
       )}
-      ItemSeparatorComponent={() => <View style={{ marginVertical: 8 }} />}
+      ItemSeparatorComponent={() => (
+        <View
+          style={{
+            marginVertical: 8,
+          }}
+        />
+      )}
       style={{
         flex: 1,
         marginVertical: 8,
