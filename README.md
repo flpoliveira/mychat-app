@@ -16,7 +16,10 @@ To run this project locally, you need to run the API, WebSocket server, and the 
 
 ### Prerequisites
 
-Ensure you have the latest version of NodeJS installed on your machine.
+- Ensure you have the latest version of NodeJS installed on your machine. 
+- A account in the [Cloudinary](https://cloudinary.com/) which is the File Service Provider
+- A `server/.env` file with the `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`
+
 
 ### Installing Dependencies
 ```bash
@@ -29,11 +32,18 @@ npm i
 node server/index.js
 ```
 
+### Addin
+
 ### Running the API
 
 ```bash
 node server/api.js
 ```
+
+### Replacing Socket/API Endpoint URL for your own URL
+- Go to app/app.json
+- Replace `expo.extra.socketUrl` from `http://192.168.0.4:3000` for your own Socket's IP
+- Replace `expo.extra.apiUrl` from `http://192.168.0.4:3000` for your own API's IP
 
 ### Running the Mobile App
 
