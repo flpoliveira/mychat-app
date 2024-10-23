@@ -8,18 +8,11 @@
       "lastActive": "2024-10-23T12:10:27.495Z"
     },
     {
-      "userID": "ae6e8d8c-621f-417e-9d94-c6143c1dddc5",
-      "username": "James",
-      "imgUrl": "https://api.multiavatar.com/6886a1f9-2850-43c4-bbd1-96d1b1642156.png",
-      "connected": false,
-      "lastActive": "2024-10-23T11:51:39.425Z"
-    },
-    {
       "userID": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
       "username": "John",
       "imgUrl": "https://api.multiavatar.com/6fbdda38-f717-495e-b2d0-7cfa7a4a04ec.png",
-      "connected": true,
-      "lastActive": "2024-10-23T13:13:32.568Z"
+      "connected": false,
+      "lastActive": "2024-10-23T13:17:58.445Z"
     },
     {
       "userID": "cfe44e94-700a-4098-bf78-826c0feb7f82",
@@ -40,26 +33,65 @@
       "username": "Test",
       "imgUrl": "https://api.multiavatar.com/a40df839-9b2b-4c89-ace1-5e6763fbaca0.png",
       "connected": true,
-      "lastActive": "2024-10-23T13:13:33.963Z"
+      "lastActive": "2024-10-23T13:22:46.742Z"
+    },
+    {
+      "userID": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
+      "username": "Ethan",
+      "imgUrl": "https://api.multiavatar.com/8487ec77-a426-4c21-9cec-0b0ce01bd38f.png",
+      "connected": true,
+      "lastActive": "2024-10-23T13:23:28.051Z"
     }
   ],
   "messages": [
     {
-      "id": "ee7245af-d982-46f1-83a2-37881ecfdc44",
-      "timestamp": "2024-10-23T13:01:24.169Z",
-      "content": "test",
-      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "id": "ed1bd428-4c94-4e1a-a004-e7664117943b",
+      "timestamp": "2024-10-23T13:20:05.908Z",
+      "content": "Hello man.",
+      "from": "18065fe8-a4ae-45cd-a9da-4102501aa7d2",
       "liked": false,
-      "to": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5"
+      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
     },
     {
-      "id": "e6a95268-688c-47c5-9aee-201bcb49afbe",
-      "timestamp": "2024-10-23T13:03:08.418Z",
-      "content": "",
-      "from": "ab5e652a-e34d-4bc1-b4d9-39cffac6d3c5",
+      "id": "9438ecdd-44b1-4d22-84aa-b117a4d19f81",
+      "timestamp": "2024-10-23T13:23:36.230Z",
+      "content": "Hey man!",
+      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
+      "liked": false,
+      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
+    },
+    {
+      "id": "3a4b3b01-df65-45bd-8d6f-0706ee4d09d4",
+      "timestamp": "2024-10-23T13:23:45.931Z",
+      "content": "Hey Ethan.",
+      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "liked": false,
+      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92"
+    },
+    {
+      "id": "c20c4493-49ef-4d1e-badc-eca94856cc74",
+      "timestamp": "2024-10-23T13:24:00.771Z",
+      "content": "Look at this!",
+      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
       "liked": true,
       "to": "ab341d0a-234f-4121-a007-e2b60d5a8832",
-      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729688587/vlg0znwyfz95xmezk8sh.jpg"
+      "imgUrl": "https://res.cloudinary.com/dlggt4zhl/image/upload/v1729689840/tbesxz4zmr2oxpr1zgji.jpg"
+    },
+    {
+      "id": "32e06f3f-b262-4028-bfc4-fea40d4204b6",
+      "timestamp": "2024-10-23T13:24:17.703Z",
+      "content": "Awesome dude, great picture.",
+      "from": "ab341d0a-234f-4121-a007-e2b60d5a8832",
+      "liked": false,
+      "to": "b2de418b-46f8-4be9-8e9b-b6ee233bec92"
+    },
+    {
+      "id": "9aed75ae-aef5-4dfc-975f-a76f5ec56618",
+      "timestamp": "2024-10-23T13:24:23.449Z",
+      "content": "Thank you",
+      "from": "b2de418b-46f8-4be9-8e9b-b6ee233bec92",
+      "liked": false,
+      "to": "ab341d0a-234f-4121-a007-e2b60d5a8832"
     }
   ]
 }
