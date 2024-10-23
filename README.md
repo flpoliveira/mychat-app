@@ -1,0 +1,70 @@
+# MyChat App
+
+A new way of chatting with people. With MyChat, you can join a chat using a username, see who's online, send and receive messages and pictures, and even send likes by double-tapping on each message. Experience a fresh, engaging way of communication.
+
+## Features
+
+- Real-time chat with other users
+- See online status of users
+- Send and receive images
+- Like messages with a double tap
+- Private messaging
+
+## Getting Started
+
+To run this project locally, you need to run the API, WebSocket server, and the mobile app.
+
+### Prerequisites
+
+Ensure you have the latest version of NodeJS installed on your machine.
+
+### Running the WebSocket Server
+
+```bash
+node server/index.js
+```
+
+### Running the API
+
+```bash
+node server/api.js
+```
+
+### Running the Mobile App
+
+```bash
+cd app && npm run start
+```
+
+## Architecture
+
+### Database
+
+For this project, we are using LowDB—a JSON-based database for mockup projects. It is responsible for retrieving and saving sessions and messages. In a real-world scenario, you could replace LowDB with a relational database like PostgreSQL by re-implementing the module.
+
+### WebSocket
+
+The WebSocket handles real-time messaging and user connections. It supports the following events:
+
+- `user connected`: Notifies all users when a new user joins the chat.
+- `session`: Returns the session information to the connected user.
+- `users`: Notifies the connected user of the other signed-in users.
+- `private message`: Sends a private message to both the sender and receiver.
+- `like message`: Likes or unlikes a message.
+- `private chat`: Handles private chat connections and returns the message history between two users.
+- `user disconnected`: Notifies all users when a user disconnects.
+
+### API
+
+The API handles file uploads. The mobile app sends the file to the API, which uploads it to a cloud storage service like Cloudinary and returns the image URL. The mobile app can then send messages with the correct image URL.
+
+- **Endpoint:** `/upload` – Receives base64-encoded files and uploads them to Cloudinary.
+
+### Mobile App
+
+The mobile app uses two main contexts:
+
+- **Socket Context:** Manages the socket connection and session retrieval.
+- **Chat Context:** Handles chat operations such as sending messages, sending likes, etc.
+
+The app was created using Expo SDK 51 and utilizes Expo Router for navigation. It supports both light and dark modes.

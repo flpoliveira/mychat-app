@@ -82,7 +82,6 @@ io.on("connection", async (socket) => {
       lastMessage,
     });
   }
-  console.log("users", users);
   socket.emit("users", users);
 
   // notify existing users
