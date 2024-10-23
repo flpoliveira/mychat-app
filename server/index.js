@@ -26,6 +26,7 @@ io.use(async (socket, next) => {
     if (session) {
       socket.userID = session.userID;
       socket.username = session.username;
+      socket.imgUrl = session.imgUrl;
       return next();
     }
   }
@@ -35,6 +36,7 @@ io.use(async (socket, next) => {
   }
   socket.userID = randomId();
   socket.username = username;
+  socket.imgUrl = socket.handshake.auth.imgUrl;
   next();
 });
 
@@ -46,6 +48,7 @@ io.on("connection", async (socket) => {
   saveSession({
     userID: socket.userID,
     username: socket.username,
+    imgUrl: socket.imgUrl,
     connected: true,
     lastActive: new Date().toISOString(),
   });
@@ -55,6 +58,7 @@ io.on("connection", async (socket) => {
   socket.emit("session", {
     userID: socket.userID,
     username: socket.username,
+    imgUrl: socket.imgUrl,
   });
 
   // join the "userID" room

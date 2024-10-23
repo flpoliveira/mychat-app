@@ -3,14 +3,38 @@
     {
       "userID": "b971076e-0a13-4af3-be21-e8f8f0d066df",
       "username": "Simulator",
-      "connected": true,
-      "lastActive": "2024-10-23T00:36:13.145Z"
+      "connected": false,
+      "lastActive": "2024-10-23T01:00:45.895Z"
     },
     {
       "userID": "74ed062f-1d6d-4e20-8807-0deeb3c4f282",
       "username": "Flpoliveira",
+      "connected": false,
+      "lastActive": "2024-10-23T00:39:31.167Z"
+    },
+    {
+      "userID": "5d23539e-b814-411f-a983-2a812bc903b9",
+      "username": "Flpoliveira",
+      "connected": false,
+      "lastActive": "2024-10-23T01:15:04.146Z"
+    },
+    {
+      "userID": "88caa59a-cd22-4654-b6bb-54388329425a",
+      "username": "Flpoliveira",
+      "connected": false,
+      "lastActive": "2024-10-23T01:22:50.822Z"
+    },
+    {
+      "userID": "7a27b650-05c0-4ef8-bc60-95e1960842a3",
+      "username": "John",
+      "connected": false,
+      "lastActive": "2024-10-23T01:24:34.039Z"
+    },
+    {
+      "userID": "19860c1b-8825-4398-9f80-9b0eb88e4b43",
+      "username": "Joao",
       "connected": true,
-      "lastActive": "2024-10-23T00:36:13.435Z"
+      "lastActive": "2024-10-23T01:25:02.342Z"
     }
   ],
   "messages": [

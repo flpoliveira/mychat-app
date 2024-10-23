@@ -21,6 +21,7 @@ function ThemedInput(
       {...props}
       placeholderTextColor={placeholderTextColor}
       style={[
+        styles.input,
         { backgroundColor, color },
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
@@ -33,6 +34,11 @@ function ThemedInput(
 }
 
 const styles = StyleSheet.create({
+  input: {
+    fontSize: 14,
+    padding: 12,
+    borderRadius: 8,
+  },
   default: {
     fontSize: 16,
   },

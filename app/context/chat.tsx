@@ -19,7 +19,11 @@ const SocketContext = createContext<{
   socket: MutableRefObject<Socket | null>;
   session: SessionType | null;
   handleChangeSession: (value: SessionType) => void;
-  connect: (username: string, userID?: string) => void;
+  connect: (
+    username: string,
+    randomAvatarUrl?: string,
+    userID?: string
+  ) => void;
   allUsers: Array<UserType>;
   updateStoreMessage: (message: Partial<UserMessageType>) => void;
 } | null>(null);
@@ -127,14 +131,17 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
     await storeSession(value);
   }, []);
 
-  const connect = useCallback((username: string, userID?: string) => {
-    if (socketRef.current && username) {
-      socketRef.current.auth = { username, userID };
-      socketRef.current.connect();
-    } else {
-      console.log("Socket not available");
-    }
-  }, []);
+  const connect = useCallback(
+    (username: string, randomAvatarUrl?: string | null, userID?: string) => {
+      if (socketRef.current && username) {
+        socketRef.current.auth = { username, userID, imgUrl: randomAvatarUrl };
+        socketRef.current.connect();
+      } else {
+        console.log("Socket not available");
+      }
+    },
+    []
+  );
 
   const sendMessage = useCallback(
     (message: { content: string; imgUrl?: string }) => {
@@ -177,7 +184,7 @@ const SocketProvider = ({ children }: { children: React.ReactElement }) => {
    */
   useEffect(() => {
     if (!connection && !!session && session.username && session.userID) {
-      connect(session.username, session.userID);
+      connect(session.username, null, session.userID);
       setConnection(true);
     }
   }, [connection, connect, session]);
